@@ -171,6 +171,7 @@
                 }, 1000);
             }
         }
+        //prueba de cambio 
 
         function resetearSeleccion() {
             cartasSeleccionadas = [];
