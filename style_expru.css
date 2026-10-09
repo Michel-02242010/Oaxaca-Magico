@@ -1,0 +1,229 @@
+/* ==========================================================================
+   ESTILOS GENERALES Y BASE DE LA TEMÁTICA OAXAQUEÑA
+   ========================================================================== */
+body {
+    background-color: #170d06; /* Fondo ultra oscuro exterior */
+    margin: 0;
+    padding: 20px;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+}
+
+.interfaz-principal {
+    background-color: #2b160a; /* Café oscuro del contenedor */
+    border: 5px solid #df9e51; /* Borde dorado grueso */
+    border-radius: 24px;
+    padding: 30px;
+    max-width: 1100px;
+    width: 100%;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
+    box-sizing: border-box;
+    position: relative;
+}
+
+/* Encabezado con el título principal */
+.encabezado-juego {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.titulo-rojo {
+    background: linear-gradient(180deg, #d32f2f, #9a0007);
+    color: white;
+    font-size: 36px;
+    font-weight: 900;
+    padding: 10px 40px;
+    border-radius: 50px;
+    display: inline-block;
+    border: 3px solid #df9e51;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    margin: 0 0 10px 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.subtitulo-dorado {
+    color: #ffca28;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0;
+}
+
+/* ==========================================================================
+   SECCIÓN DE TARJETAS COMPARATIVAS (MITO Y LEYENDA)
+   ========================================================================== */
+.contenedor-bloques {
+    display: flex;
+    gap: 25px;
+    margin-bottom: 25px;
+}
+
+.bloque-concepto {
+    flex: 1;
+    background-color: #401f0f; /* Café intermedio */
+    border: 3px solid #df9e51;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: inset 0 0 15px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+}
+
+.titulo-concepto {
+    background: linear-gradient(180deg, #d32f2f, #9a0007);
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    padding: 8px 0;
+    border-radius: 15px;
+    margin: 0 0 20px 0;
+    text-transform: uppercase;
+    border: 2px solid #df9e51;
+}
+
+.contenido-concepto {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    height: 100%;
+}
+
+/* Espacio para tus ilustraciones/imágenes */
+.ilustracion-espacio {
+    width: 40%;
+    height: 200px;
+    background-color: #2b160a;
+    border-radius: 15px;
+    border: 2px dashed #df9e51;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #bfa085;
+    font-size: 13px;
+    text-align: center;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+/* Lista de características con viñetas */
+.lista-caracteristicas {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.item-caracteristica {
+    background-color: #9a0007; /* Fondo rojo de los renglones */
+    color: white;
+    padding: 10px 15px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid #df9e51;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+}
+
+.icono-vinyeta {
+    font-size: 18px;
+    background-color: #401f0f;
+    padding: 4px;
+    border-radius: 50px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #df9e51;
+}
+
+/* ==========================================================================
+   SECCIÓN INFERIOR (SIMILITUDES Y BOTÓN)
+   ========================================================================== */
+.fila-inferior {
+    display: flex;
+    gap: 20px;
+    align-items: stretch;
+}
+
+.bloque-similitudes {
+    flex: 3;
+    background-color: #401f0f;
+    border: 3px solid #df9e51;
+    border-radius: 20px;
+    padding: 20px;
+    position: relative;
+}
+
+.titulo-similitudes {
+    background-color: #2b160a;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 4px 20px;
+    border-radius: 50px;
+    border: 2px solid #df9e51;
+    position: absolute;
+    top: -15px;
+    left: 30px;
+}
+
+.grid-similitudes {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 15px;
+    gap: 15px;
+}
+
+.columna-similitud {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #ffffff;
+    font-size: 13.5px;
+    line-height: 1.3;
+    border-right: 1px dashed rgba(223, 158, 81, 0.4);
+    padding-right: 10px;
+}
+
+.columna-similitud:last-child {
+    border-right: none;
+}
+
+/* Botón interactivo */
+button {
+  margin-top: 30px;
+  padding: 1.3em 3em;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 500;
+  color: #000;
+  background-color: #df9e51;
+  border: 2px solid #2b160a;
+  border-radius: 45px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+  outline: none;
+}
+
+button:hover {
+  background-color: #2b160a;
+  box-shadow: 5px 15px 20px  #df9e51;
+ rgb: (46, 229, 157, 1.4);
+  color:#df9e51;
+  transform: translateY(-7px);
+  border: 2px solid #df9e51;
+}
+
+button:active {
+  transform: translateY(-1px);
+}
