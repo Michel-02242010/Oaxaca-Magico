@@ -171,7 +171,7 @@
                 }, 1000);
             }
         }
-        //prueba de cambio 
+        //prueba de cambio hg
 
         function resetearSeleccion() {
             cartasSeleccionadas = [];
