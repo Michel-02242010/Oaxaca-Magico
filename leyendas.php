@@ -1,67 +1,191 @@
-<style>
-    .grid-didactico{display:flex;gap:25px;max-width:850px;width:90vw;z-index:10;margin-top:10px}
-    .tarjeta-conocimiento{background:rgba(33,1,0,0.9);border:5px solid #E6A341;border-radius:30px;padding:30px 20px;text-align:center;color:#FFFBF2;flex:1;box-shadow:0 12px 24px rgba(0,0,0,0.5);display:flex;flex-direction:column;align-items:center;transition:all 0.3s}
-    .tarjeta-conocimiento:hover{transform:scale(1.04) translateY(-5px);box-shadow:0 15px 30px rgba(230,163,65,0.3)}
-    .tarjeta-conocimiento h2{color:#FECE79;margin:8px 0;font-size:24px;text-shadow:2px 2px 0px #000}
-    .anim-icono{font-size:55px;margin-bottom:12px;animation:bal 3s ease-in-out infinite alternate}
-    @keyframes bal { 0%{transform:rotate(-8deg)} 100%{transform:rotate(8deg) scale(1.08)} }
-    .caja-definicion{font-size:15px;line-height:1.5;text-align:justify;background:#502A38;padding:15px;border-radius:15px;border-left:5px solid #B14A36;margin-bottom:20px;font-weight:bold;color:#FECE79}
-    .btn-aventura-oro{background:#E6A341;color:#210100;border:none;border-bottom:5px solid #9c6823;padding:12px 25px;font-weight:bold;font-size:17px;border-radius:15px;cursor:pointer;width:85%;transition:all 0.1s;text-align:center}
-    .btn-aventura-oro:hover{background:#FECE79}
-    .btn-aventura-oro:active{transform:translateY(4px);border-bottom-width:1px}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oaxaca Mágico - Una Historia Ancestral</title>
+    <link href="https://googleapis.com" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, #1A0F08, #361A0C, #1A0F08);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #FECE79;
+            overflow-x: hidden;
+        }
 
-    .pergamino-magico{display:none;background:rgba(33,1,0,0.95);border:5px dashed #B14A36;border-radius:35px;max-width:750px;width:90vw;padding:35px;box-shadow:0 15px 35px rgba(0,0,0,0.6);text-align:center}
-    .pergamino-magico h1{color:#E6A341;margin:0 0 12px 0;font-size:26px}
-    .pergamino-magico p{font-size:16px;line-height:1.6;text-align:justify;margin-bottom:25px;font-weight:bold;color:#FECE79}
-    .btn-menu-regresar{background:#502A38;color:#FECE79;border:none;border-bottom:4px solid #191121;padding:12px 22px;font-weight:bold;border-radius:12px;cursor:pointer;margin-right:10px}
-</style>
+        h1.titulo-leyenda {
+            font-family: 'Fredoka One', cursive;
+            font-size: 32px;
+            color: #FECE79;
+            text-shadow: 3px 3px 0px #8C0902;
+            margin-bottom: 25px;
+            text-align: center;
+        }
 
-<div style="display:flex;flex-direction:column;align-items:center;width:100%;z-index:10">
-    <div id="titulosConcepto" style="text-align:center; margin-bottom:15px">
-        <h1 style="font-size:32px;text-shadow:3px 3px 0 #000;margin:0;color:#E6A341">¡La Academia del Gran Explorador! 🧭</h1>
-        <p style="font-size:16px;font-weight:bold;margin:5px 0 0 0;color:#FECE79;text-shadow:1px 1px 2px #000">¡Aprende los secretos de las historias antes de escoger tu misión en el mapa!</p>
+        /* SECCIÓN DE VIDEO (LO PRIMERO QUE VE EL NIÑO) */
+        .zona-video {
+            width: 90%;
+            max-width: 750px;
+            margin-bottom: 35px;
+            text-align: center;
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* Relación 16:9 */
+            height: 0;
+            overflow: hidden;
+            border: 5px solid #fece79;
+            border-radius: 25px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.7);
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+        }
+
+        /* EL PERGAMINO (OCULTO AL PRINCIPIO) */
+        .pergamino-contenedor {
+            display: none; /* Se activa mediante JavaScript */
+            background-color: #f4e4c1;
+            background-image: radial-gradient(circle, #fbf4df 60%, #e2ca97 100%);
+            border: 8px solid #5c3a21;
+            border-radius: 4px;
+            box-shadow: 0 0 0 4px #fece79, 0 15px 35px rgba(0,0,0,0.6), inset 0 0 40px rgba(92, 58, 33, 0.3);
+            max-width: 750px;
+            width: 90%;
+            padding: 40px 35px;
+            position: relative;
+            margin-bottom: 30px;
+            box-sizing: border-box;
+        }
+
+        .pergamino-contenedor::before, .pergamino-contenedor::after {
+            content: "";
+            position: absolute;
+            height: 25px;
+            width: 103%;
+            background: #422612;
+            border: 3px solid #fece79;
+            border-radius: 10px;
+            left: -1.5%;
+        }
+        .pergamino-contenedor::before { top: -15px; }
+        .pergamino-contenedor::after { bottom: -15px; }
+
+        .texto-narrado {
+            font-family: 'Special Elite', cursive;
+            font-size: 21px;
+            line-height: 1.7;
+            color: #2b1408;
+            min-height: 150px;
+            white-space: pre-line;
+        }
+
+        /* BOTONES */
+        .contenedor-botones {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            width: 100%;
+            max-width: 750px;
+            margin-top: 20px;
+            margin-bottom: 40px;
+        }
+
+        .btn-accion {
+            font-family: 'Fredoka One', cursive;
+            font-size: 18px;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            text-decoration: none;
+            color: #fff;
+            text-shadow: 2px 2px 0px rgba(0,0,0,0.4);
+            box-shadow: 0 6px 0px rgba(0,0,0,0.3), 0 8px 15px rgba(0,0,0,0.4);
+            transition: all 0.1s ease;
+            text-align: center;
+        }
+
+        .btn-siguiente { background-color: #ff9f1c; border-bottom: 5px solid #cc7a00; }
+        .btn-siguiente:hover { background-color: #ffb142; }
+
+        .btn-juegos { background-color: #2daf48; border-bottom: 5px solid #196127; display: none; }
+        .btn-juegos:hover { background-color: #39c755; }
+
+        .btn-mapa { background-color: #8c0902; border-bottom: 5px solid #4a0502; }
+        .btn-mapa:hover { background-color: #b14a36; }
+
+        .btn-accion:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0px rgba(0,0,0,0.3), 0 4px 6px rgba(0,0,0,0.4);
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="musica-region" src="musica_region.mp3" loop autoplay></audio>
+
+    <h1 class="titulo-leyenda" id="titulo">Bienvenidos a la Sierra Juárez</h1>
+
+    <!-- 1. El Video de la Región -->
+    <div class="zona-video" id="seccion-video">
+        <div class="video-wrapper">
+            <!-- Pon aquí tu video interactivo de la región correspondiente -->
+            <iframe src="https://youtube.com" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
     </div>
 
-    <div id="cajasConcepto" class="grid-didactico">
-        <div class="tarjeta-conocimiento">
-            <div class="anim-icono">🌌</div>
-            <h2>¿Qué es un Mito?</h2>
-            <div class="caja-definicion">🧠 Un mito es un relato mágico súper antiguo creado para explicar misterios colosales: cómo nació el sol, las estrellas o las hermosas montañas de Oaxaca. ¡Sus protagonistas son dioses con superpoderes, gigantes o fuerzas de la naturaleza!</div>
-            <button class="btn-aventura-oro" onclick="abrirCuentoMuestra('mito')">¡Aprender Mitos! 🚀</button>
-        </div>
-        <div class="tarjeta-conocimiento">
-            <div class="anim-icono">🦊</div>
-            <h2>¿Qué es una Leyenda?</h2>
-            <div class="caja-descripcion caja-definicion">🍃 Una leyenda es un cuento maravilloso basado en un hecho real que sucedió hace tiempo en algún pueblo oaxaqueño. Se transmite de abuelitos a nietos y con los años le añaden magia, guardianes o criaturas del bosque.</div>
-            <button class="btn-aventura-oro" onclick="abrirCuentoMuestra('leyenda')">¡Ver Leyendas! 🚀</button>
-        </div>
+    <!-- 2. El Pergamino Mágico (Empieza oculto) -->
+    <div class="pergamino-contenedor" id="seccion-pergamino">
+        <div id="pantalla-texto" class="texto-narrado"></div>
     </div>
 
-    <div id="pantallaCuento" class="pergamino-magico">
-        <h1 id="titCuento">Título de la Historia</h1>
-        <p id="txCuento">Cargando cuento legendario...</p>
-        <div>
-            <button class="btn-menu-regresar" onclick="cerrarCuentoMuestra()">📖 Regresar a las Definiciones</button>
-            <button class="btn-aventura-oro" style="width:auto;padding:12px 25px" onclick="location.href='plataforma.php?seccion=mapa'">🧭 ¡Ir a las Misiones del Mapa!</button>
-        </div>
+    <!-- Botones de Navegación -->
+    <div class="contenedor-botones">
+        <a href="plataforma.php" class="btn-accion btn-mapa">🗺️ Mapa</a>
+        <button class="btn-accion btn-siguiente" id="btn-entrar" onclick="comenzarLeyenda()">¡Ver el Mito Ancestral! 📜</button>
+        <a href="menu_juegos.php" class="btn-accion btn-juegos" id="btn-juego-final">🎮 ¡Ir a los Juegos!</a>
     </div>
-</div>
 
-<script>
-    const cuentosIntroduccion = {
-        mito: { titulo: "🌌 Mito Ancestral: El Águila que Creó el Día", texto: "Cuentan los sabios antiguos que al principio del tiempo todo el estado de Oaxaca estaba sumergido en una noche eterna y fría. Un día, una gigantesca Águila de Fuego voló desde lo alto del universo y se posó sobre el árbol de copal más grande de la Sierra. Al abrir su pico para cantar, de sus plumas brotaron chispas de oro tan brillantes que empujaron toda la oscuridad hacia el fondo de los barrancos, creando así el primer amanecer para que los niños pudieran correr y sembrar maíz. ¡Por eso el sol sale todos los días!" },
-        leyenda: { titulo: "🦊 Leyenda Mágica: Los Guardianes de la Sierra", texto: "¡Abre bien tus oídos, explorador! Cuenta la leyenda que en los bosques más escondidos y húmedos de Oaxaca habitan los Mokuan, unos duendecillos mágicos del tamaño de un hongo que visten sombreros hechos de hojas secas. Los abuelitos dicen que son los cuidadores de las plantas. Si un niño entra a la Sierra gritando o tirando basura, los Mokuan se enojan y soplan un viento que borra sus huellas del suelo para que camine en círculos. Pero si eres un niño limpio que cuida los árboles y les dejas una fruta de regalo, ellos cantarán canciones alegres y te guiarán con luciérnagas doradas para llevarte a salvo de regreso a casa." }
-    };
-    function abrirCuentoMuestra(t) {
-        document.getElementById('cajasConcepto').style.display = 'none';
-        document.getElementById('titulosConcepto').style.display = 'none';
-        document.getElementById('titCuento').innerText = cuentosIntroduccion[t].titulo;
-        document.getElementById('txCuento').innerText = `"${cuentosIntroduccion[t].texto}"`;
-        document.getElementById('pantallaCuento').style.display = 'block';
-    }
-    function cerrarCuentoMuestra() {
-        document.getElementById('pantallaCuento').style.display = 'none';
-        document.getElementById('cajasConcepto').style.display = 'flex';
-        document.getElementById('titulosConcepto').style.display = 'block';
-    }
-</script>
+    <script>
+        const leyendaTexto = "Hace muchos años, en los frondosos y mágicas bosques de la Sierra Juárez, la neblina guardaba grandes secretos...\n\nLos guardianes del bosque cuentan que los árboles hablan por las noches, narrando historias antiguas para proteger las tradiciones de Oaxaca.\n\nPresta mucha atención, explorador, porque la magia está por comenzar...";
+
+        let indice = 0;
+        // Ajustamos la velocidad aquí: 85ms es ideal para niños de primaria (va letra por letra con calma)
+        const velocidadEscritura = 85; 
+
+        function comenzarLeyenda() {
+            // Ocultamos el video y mostramos el pergamino
+            document.getElementById("seccion-video").style.display = "none";
+            document.getElementById("btn-entrar").style.display = "none";
+            document.getElementById("seccion-pergamino").style.display = "block";
+            document.getElementById("titulo").innerText = "📍 El Mito de la Sierra";
+            
+            // Iniciamos la escritura pausada
+            aparecerTexto();
+        }
+
+        function aparecerTexto() {
+            if (indice < leyendaTexto.length) {
+                document.getElementById("pantalla-texto").innerHTML += leyendaTexto.charAt(indice);
+                indice++;
+                setTimeout(aparecerTexto, velocidadEscritura);
+            } else {
+                // Al terminar todo el texto, aparece el botón verde de juegos
+                document.getElementById("btn-juego-final").style.display = "inline-block";
+            }
+        }
+    </script>
+
+</body>
+</html>

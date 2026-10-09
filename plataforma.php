@@ -32,14 +32,13 @@ if (!isset($_SESSION['alumno_nombre'])) { header("Location: index.php"); exit();
 <body>
 
     <!-- REPRODUCTOR ÚNICO DE AUDIO DINÁMICO -->
-    <audio id="bg-music" loop autoplay
-    ></audio>
+    <audio id="bg-music" loop autoplay></audio>
 
     <!-- Barra de pestañas fijas superiores apuntando a tus canciones reales -->
     <nav class="nav-top">
-        <button class="tab-btn activa" onclick="tab('aprender', 'guela.mp3')">📖 Aprender</button>
-        <button class="tab-btn" onclick="tab('mapa', 'viva_mex.mp3')">🧭 Mapa</button>
-        <button class="tab-btn" onclick="tab('juegos', 'todo_de_ti.mp3')">🎮 Juegos</button>
+        <button class="tab-btn activa" onclick="tab('aprender', 'sonido/coldplay.mp3')">📖 Aprender</button>
+        <button class="tab-btn" onclick="tab('mapa', 'sonido/infantil.mp3')">🧭 Mapa</button>
+        <button class="tab-btn" onclick="tab('juegos', 'sonido/rojo.mp3')">🎮 Juegos</button>
     </nav>
 
     <!-- INTERFAZ 1: APRENDER -->
@@ -95,7 +94,7 @@ if (!isset($_SESSION['alumno_nombre'])) { header("Location: index.php"); exit();
 
         // Al iniciar por primera vez, reproduce automáticamente la canción de la pestaña Aprender
         window.addEventListener('DOMContentLoaded', () => {
-            audio.src = "guela.mp3";
+            audio.src = "sonido/coldplay.mp3";
             audio.play().catch(() => {});
         });
     </script>

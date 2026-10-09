@@ -28,7 +28,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8"><title>Oaxaca Mágico!</title>
     <link href="https://googleapis.com" rel="stylesheet">
     <style>
-        body { font-family: 'Quicksand', sans-serif; background: linear-gradient(-45deg, #1A0F08, #361A0C, #5C3A21, #2B160A); background-size: 400% 400%; animation: movF0 12s ease infinite; min-height: 100vh; margin: 0; display: flex; justify-content: center; align-items: center; overflow: hidden; position: relative; }
+        body { font-family: 'Quicksand', sans-serif;
+
+        background: linear-gradient(-45deg, #4A2E1B, #5C3A21, #8C4F2B, #361A0C);background-size: 400% 400%; animation: movF0 12s ease infinite; min-height: 100vh; margin: 0; display: flex; justify-content: center; align-items: center; overflow: hidden; position: relative; }
         @keyframes movF0 { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
         .intro-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #1A0F08, #361A0C); z-index: 100; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1); }
         .title-main { font-family: 'Fredoka One', cursive; font-size: 56px; color: #FECE79; text-shadow: 4px 4px 0px #8C0902; margin: 0 0 10px 0; text-align: center; }
@@ -52,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </style>
 </head>
 <body>
-    <audio id="musica" src="coldplay.mp3" loop></audio>
+    <audio id="musica" src="rojo.mp3" loop></audio>
 
     <div class="estrella" style="top: 15%; left: 12%;"></div>
     <div class="estrella" style="top: 25%; left: 78%;"></div>
@@ -78,9 +80,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <label class="lbl-datos">Grupo:</label>
             <input type="text" name="Grupo" placeholder="Escribe tu grupo" required autocomplete="off">
             <label class="lbl-datos">Contraseña:</label>
-            <input type="password" name="contrasena" placeholder="Escribe tu clave secreta" required>
+<div class="password-contenedor" style="position: relative; width: 100%;">
+    <input type="password" name="contrasena" id="txt-contrasena" placeholder="Escribe tu clave secreta" required style="width: 100%; padding-right: 45px; box-sizing: border-box;">
+    <span id="btn-ojo" onclick="togglePassword()" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; display: flex; align-items: center;">
+        <!-- Icono del ojito blanco brillante -->
+        <svg id="svg-ojo" xmlns="http://w3.org" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 22px; height: 22px; transition: 0.2s;">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+            <circle cx="12" cy="12" r="3"></circle>
+        </svg>
+    </span>
+</div>
             <button class="btn-jugar" type="submit">INGRESAR</button>
         </form>
+        <script>
+function togglePassword() {
+    const inputPass = document.getElementById('txt-contrasena');
+    const svgOjo = document.getElementById('svg-ojo');
+    
+    if (inputPass.type === 'password') {
+        inputPass.type = 'text';
+        // Código visual para el ojo abierto/activado (puedes cambiarle el color a tu dorado #FECE79 si quieres que resalte al mostrar)
+        svgOjo.setAttribute('stroke', '#FECE79');
+        svgOjo.innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>';
+    } else {
+        inputPass.type = 'password';
+        // Vuelve a estar oculto y en color blanco
+        svgOjo.setAttribute('stroke', '#FFFFFF');
+        svgOjo.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>';
+    }
+}
+</script>
+
     </div>
 
     <script>
