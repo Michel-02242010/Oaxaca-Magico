@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Oaxaca Mágico</title>
+
+    <link rel="stylesheet" href="css/estilos.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&display=swap" rel="stylesheet">
+    <script src="js/script.js" defer></script>
+</head>
+
+<body>
+<!-- Humo mágico (video) -->
+<div class="humo-video-contenedor" aria-hidden="true">
+    <video class="humo-video" id="humo-a" autoplay muted playsinline>
+        <source src="video/humo.mp4" type="video/mp4">
+    </video>
+    <video class="humo-video" id="humo-b" muted playsinline>
+        <source src="video/humo.mp4" type="video/mp4">
+    </video>
+</div>
+    <main class="pantalla">
+
+        <header class="encabezado">
+
+            <h1>
+                OAXACA
+                <span>Mágico</span>
+            </h1>
+
+            <p class="subtitulo">
+                Mitos y Leyendas de las Ocho Regiones de Oaxaca
+            </p>
+        </header>
+
+        <section class="mapa" aria-label="Mapa interactivo de Oaxaca">
+            <div id="mapa-oaxaca">
+                <p class="mensaje-carga">Cargando mapa...</p>
+            </div>
+        </section>
+
+    </main>
+
+</body>
+</html>
