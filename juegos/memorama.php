@@ -8,6 +8,68 @@
     <link href="https://googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@700&display=swap" rel="stylesheet">
     
     <style>
+        /* FONDO OSCURO QUE CUBRE LA PLATAFORMA */
+.modal-oculto {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(26, 15, 8, 0.85); /* Café místico transparente */
+    display: flex; justify-content: center; align-items: center;
+    z-index: 9999;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.5s ease-in-out;
+}
+
+/* CUANDO SE ACTIVA EL LETRERO */
+.modal-oculto.mostrar {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* LA TARJETA LLAMATIVA DE VICTORIA */
+.tarjeta-victoria button {
+    font-family: 'Fredoka One', cursive; /* O la fuente redonda que uses */
+    background: #8C0902; /* Rojo oaxaqueño */
+    color: #FFFBF2;
+    border: none;
+    border-bottom: 4px solid #4A0502; /* Relieve de maquinita */
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 15px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    transition: all 0.1s ease;
+    margin: 5px;
+}
+
+.tarjeta-victoria button:hover {
+    background: #B14A36;
+    transform: translateY(-2px);
+}
+
+.tarjeta-victoria button:active {
+    transform: translateY(2px);
+    border-bottom-width: 1px;
+}
+
+.modal-oculto.mostrar .tarjeta-victoria {
+    transform: scale(1); /* Efecto rebote infantil y divertido */
+}
+
+.tarjeta-victoria h2 {
+    color: #8C0902;
+    font-size: 32px;
+    margin-bottom: 15px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+}
+
+.tarjeta-victoria p {
+    color: #361A0C;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 25px;
+}
+
         body { 
             font-family: 'Quicksand', sans-serif; 
             background: linear-gradient(135deg, #F4EBE1, #E6D5C3); 
@@ -23,76 +85,101 @@
             text-shadow: 1px 1px 0px #FFF;
             margin-bottom: 5px;
         }
+/* 🚪 BOTÓN DE SALIR INTERACTIVO EN LA ESQUINA INFERIOR */
+.btn-salir-esquina {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    font-family: 'Fredoka One', cursive;
+    background: #8C0902; /* Tu rojo oaxaqueño */
+    color: #FFFBF2;
+    border: none;
+    border-bottom: 4px solid #4A0502; /* Relieve de botoncito */
+    padding: 12px 22px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 15px;
+    cursor: pointer;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+    z-index: 1000;
+    transition: all 0.1s ease;
+}
 
-        /* 🗺️ Rejilla del Memorama (4 columnas x 3 filas) */
-        .tablero-memorama {
-            display: grid;
-            grid-template-columns: repeat(4, 90px);
-            gap: 12px;
-            justify-content: center;
-            margin: 25px auto;
-            max-width: 420px;
-        }
+.btn-salir-esquina:hover {
+    background: #B14A36;
+    transform: translateY(-2px);
+}
 
-        /* 🎴 Estilo de las Cartas */
-        .carta {
-            width: 90px;
-            height: 120px;
-            background: #361A0C; /* Café oscuro por detrás */
-            border: 3px solid #8C0902;
-            border-radius: 15px;
-            cursor: pointer;
-            position: relative;
-            transform-style: preserve-3d;
-            transition: transform 0.4s ease, border-color 0.2s;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-        }
+.btn-salir-esquina:active {
+    transform: translateY(2px);
+    border-bottom-width: 1px;
+}
 
-        .carta:hover {
-            border-color: #FECE79;
-            transform: scale(1.03);
-        }
+/* 🗺️ Rejilla del Memorama (4 columnas x 3 filas) - ¡Tarjetas Grandes! */
+.tablero-memorama {
+    display: grid;
+    grid-template-columns: repeat(4, 140px); /* Columnas más anchas para niños */
+    gap: 20px; /* Espacio divertido entre cartas */
+    justify-content: center;
+    margin: 25px auto;
+    max-width: 650px;
+}
 
-        /* Lógica para voltear */
-        .carta.volteada {
-            transform: rotateY(180deg);
-            background: #FFFBF2; /* Color crema al voltearse */
-        }
+.carta {
+    width: 140px;  
+    height: 180px; 
+    perspective: 1000px;
+    cursor: pointer;
+    position: relative; /* Esto amarra las caras y evita que se estiren hacia abajo */
+}
+/* EFECTO DE ROTACIÓN EN 3D AL HACER CLIC */
+.carta.volteada .atras {
+    transform: rotateY(180deg);
+}
 
-        .cara {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+.carta.volteada .adelante {
+    transform: rotateY(0deg);
+}
 
-        /* Reverso de la carta */
-        .atras {
-            font-size: 35px;
-            color: #FECE79;
-        }
+/* ESTILO DE TRANSICIÓN PARA QUE EL GIRO SEA SUAVE */
+.cara {
+    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform-style: preserve-3d;
+}
 
-        /* Cara frontal con tu ilustración */
-        .adelante {
-            transform: rotateY(180deg);
-        }
 
-        .adelante img {
-            width: 85%;
-            height: 85%;
-            object-fit: contain;
-        }
+.cara {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 12px;
+    border: 4px solid #E6A341; /* Tu característico borde dorado */
+    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+}
 
-        /* Pareja correcta encontrada */
-        .carta.emparejada {
-            pointer-events: none;
-            opacity: 0.85;
-            border-color: #2E7D32;
-        }
+/* LA IMAGEN O MITO QUE LLEVA ADENTRO */
+.cara img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Se adapta sin deformarse */
+    border-radius: 8px;
+}
+
+/* REVERSO DE LA CARTA (La parte de la estrellita que se ve al inicio) */
+.atras {
+    background: #361A0C; /* El café original */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* CARA FRONTAL CON TU ILUSTRACIÓN DE LA LLORONA */
+.adelante {
+    background: #FFFBF2; /* Fondo crema claro */
+    transform: rotateY(180deg);
+}
+
     </style>
 </head>
 <body>
@@ -104,6 +191,18 @@
     <p>¡Encuentra los pares de la historia del Istmo de Tehuantepec!</p>
 
     <div class="tablero-memorama" id="tablero"></div>
+    <!-- PANTALLA FLOTANTE DE FELICITACIONES -->
+<div id="pantalla-ganador" class="modal-oculto">
+    <div class="tarjeta-victoria">
+        <h2>¡Felicidades, Explorador! 👑🌟</h2>
+        <p>¡Que buena memoria tienes amigo!</p>
+  <button onclick="window.location.href='../plataforma.php?tab=juegos'">Volver a los Juegos 🎮</button>
+        <button onclick="window.location.reload()" style="background: #2D93AD; border-color: #1E6B7E; margin-top: 10px;">Jugar de nuevo 🔄</button>
+
+    </div>
+</div>
+<!-- 🚪 ¡AQUÍ PON EL BOTÓN DE SALIR EN TU MEMORAMA! -->
+<button class="btn-salir-esquina" onclick="window.location.href='../plataforma.php?tab=juegos'">Salir 🚪</button>
 
     <script>
         // 📸 LAS RUTAS SALEN DE LA CARPETA "JUEGOS" Y ENTRAN A "IMG_MEMORAMA"
@@ -119,7 +218,7 @@
         let baraja = [...imagenesCartas, ...imagenesCartas];
         baraja.sort(() => Math.random() - 0.5);
 
-        const tablero = document.getElementById('tablero');
+        const tablero = document.getElementById('tablero'); 
         let cartasSeleccionadas = [];
         let bloqueado = false;
 
@@ -178,14 +277,16 @@
             bloqueado = false;
         }
 
-        function comprobarVictoria() {
-            const emparejadas = document.querySelectorAll('.emparejada');
-            if (emparejadas.length === 12) {
-                setTimeout(() => {
-                    alert("¡Excelente memoria! Completaste el memorama de La Llorona del Istmo. ✨🎉");
-                }, 500);
-            }
-        }
+function comprobarVictoria() {
+    const emparejadas = document.querySelectorAll('.emparejada');
+    if (emparejadas.length === 12) {
+        setTimeout(() => {
+            // Activamos tu letrero interactivo en la pantalla
+            document.getElementById('pantalla-ganador').classList.add('mostrar');
+        }, 500);
+    }
+}
+
     </script>
 </body>
 </html>

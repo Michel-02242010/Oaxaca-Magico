@@ -1,102 +1,248 @@
-<?php
-session_start();
-// Si el alumno no ha entrado con su nombre, lo regresa al inicio
-if (!isset($_SESSION['alumno_nombre'])) { header("Location: index.php"); exit(); }
-?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Panel de Aventuras</title>
-    <link href="https://googleapis.com" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Bienvenidos Exploradores! - Oaxaca Mágico</title>
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@700&display=swap" rel="stylesheet">
+    
     <style>
-        /* Estilos base comprimidos y fondo de neblina oaxaqueña */
-        body { font-family: 'Quicksand', sans-serif; background: #1A0F08; margin: 0; padding-top: 100px; color: #fff; overflow-x: hidden; }
-        .nav-top { position: fixed; top: 0; left: 0; width: 100%; background: #1A0F08; border-bottom: 4px solid #E6A341; display: flex; justify-content: center; gap: 10px; padding: 12px 0; z-index: 10; }
-        .tab-btn { font-family: 'Quicksand', sans-serif; background: #2B160A; color: #FECE79; border: 2px solid #5C3A21; padding: 10px 20px; font-size: 16px; border-radius: 10px; cursor: pointer; transition: 0.2s; }
-        .tab-btn.activa { background: linear-gradient(135deg, #E6A341, #8C0902); color: #fff; border-color: #FECE79; }
-        .view { display: none; width: 100%; height: calc(100vh - 100px); border: none; }
-        .view.activa { display: block; }
-        
-        /* Contenedores de las tarjetas estilo cartas de juego */
-        .box { max-width: 800px; margin: 15px auto; background: #2B160A; border: 3px solid #E6A341; border-radius: 20px; padding: 20px; text-align: center; }
-        .grid { display: flex; gap: 15px; justify-content: center; margin: 15px 0; flex-wrap: wrap; }
-        .card { flex: 1; min-width: 280px; border-radius: 15px; padding: 15px; text-align: left; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
-        .card.mito { background: #1e3a8a; border: 3px solid #3b82f6; }
-        .card.leyenda { background: #7c2d12; border: 3px solid #ea580c; }
-        h3 { margin: 0 0 10px 0; font-size: 20px; color: #FECE79; }
-        p { font-size: 14px; line-height: 1.4; margin: 5px 0; }
-        .ejemplo { background: rgba(0,0,0,0.3); padding: 8px; border-radius: 8px; font-size: 13px; border-left: 4px solid #FECE79; margin-top: 10px; }
+        /* 🎨 TU FORMATO DE COLORES ORIGINAL Y FONDO MÍSTICO */
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, #1A0F08, #361A0C, #5C3A21, #1A0F08);
+            background-size: 400% 400%;
+            animation: neblinaOaxaca 10s ease-in-out infinite alternate;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            color: #FECE79;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        @keyframes neblinaOaxaca {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        /* 👑 BARRA DE NAVEGACIÓN Y BOTONES REDONDEADOS ORIGINALES */
+        .navbar {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            background: rgba(26, 15, 8, 0.95);
+            padding: 12px;
+            border-radius: 25px;
+            border: 4px solid #E6A341;
+            max-width: 600px;
+            margin: 0 auto 30px auto;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            z-index: 10;
+        }
+
+        .tab-btn {
+            font-family: 'Fredoka One', cursive;
+            background: transparent;
+            border: none;
+            color: #FFFBF2;
+            padding: 10px 22px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 18px;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tab-btn:hover {
+            background: rgba(230, 163, 65, 0.15);
+            color: #FECE79;
+        }
+
+        /* Tu botón con el relieve tridimensional activo */
+        .tab-btn.activa {
+            background: #8C0902;
+            color: #FFFBF2;
+            border-bottom: 4px solid #4A0502;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        /* 📦 CONTENEDORES INVISIBLES DE CONTROL DE PESTAÑAS */
+        .view {
+            display: none; /* Todo oculto por defecto para que no se encime */
+        }
+
+        /* Clase encargada de renderizar solo la sección que el niño cliquea */
+        .view.activa {
+            display: block;
+        }
+
+        /* DISEÑO DE TU PERGAMINO / MARCOS CÁLIDOS DE ANTES */
+        .contenedor-principal {
+            background: rgba(26, 15, 8, 0.95);
+            border: 5px solid #E6A341;
+            border-radius: 35px;
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 30px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.7);
+        }
+
+        h2 {
+            font-family: 'Fredoka One', cursive;
+            color: #FECE79;
+            text-shadow: 2px 2px 0px #8C0902;
+        }
+
+        /* Elementos flotantes de fondo (Luciérnagas/Burbujas mágicas) */
+        .luciernaga {
+            position: absolute;
+            bottom: -50px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+            animation: subirSutil linear infinite;
+            background: rgba(254, 206, 121, 0.2);
+            border: 1px solid rgba(254, 206, 121, 0.4);
+            box-shadow: 0 0 15px #E6A341;
+        }
+
+        @keyframes subirSutil {
+            0% { transform: translateY(0) scale(0.6); opacity: 0; }
+            20% { opacity: 0.8; }
+            100% { transform: translateY(-120vh) scale(1.1); opacity: 0; }
+        }
     </style>
 </head>
 <body>
 
-    <!-- REPRODUCTOR ÚNICO DE AUDIO DINÁMICO -->
+    <!-- ELEMENTOS GRÁFICOS MÁGICOS DE FONDO -->
+    <div class="luciernaga" style="left: 10%; width: 20px; height: 20px; animation-duration: 6s;"></div>
+    <div class="luciernaga" style="left: 40%; width: 15px; height: 15px; animation-duration: 5s; animation-delay: 1s;"></div>
+    <div class="luciernaga" style="left: 80%; width: 22px; height: 22px; animation-duration: 7s; animation-delay: 2s;"></div>
+
+    <!-- 🎵 REPRODUCTOR GENERAL DE AUDIO -->
     <audio id="bg-music" loop autoplay></audio>
 
-    <!-- Barra de pestañas fijas superiores apuntando a tus canciones reales -->
-    <nav class="nav-top">
+    <!-- 👑 TU MENÚ SUPERIOR CON LAS LLAMADAS CORREGIDAS -->
+    <div class="navbar">
         <button class="tab-btn activa" onclick="tab('aprender', 'sonido/coldplay.mp3')">📖 Aprender</button>
-        <button class="tab-btn" onclick="tab('mapa', 'sonido/infantil.mp3')">🧭 Mapa</button>
+        <button class="tab-btn" onclick="tab('mapa', 'sonido/dios.mp3')">🧭 Mapa</button>
         <button class="tab-btn" onclick="tab('juegos', 'sonido/rojo.mp3')">🎮 Juegos</button>
-    </nav>
+    </div>
 
-    <!-- INTERFAZ 1: APRENDER -->
+    <!-- ========================================== -->
+    <!-- 📖 PESTAÑA 1: APRENDER                      -->
+    <!-- ========================================== -->
     <div id="aprender" class="view activa">
-        <div class="box">
-            <h2 style="color: #FECE79; margin: 0;">¡Hola, <?php echo htmlspecialchars($_SESSION['alumno_nombre']); ?>! ✨</h2>
-            <p style="margin: 5px 0 15px 0; color: #A08068;">¡Descubre el poder de las historias antiguas!</p>
-            
-            <div class="grid">
-                <!-- Carta del Mito -->
-                <div class="card mito">
-                    <h3>⚡ MITO</h3>
-                    <p>Historias de la creación creadas por pueblos antiguos.</p>
-                    <p><strong>¿Quiénes están?</strong> ¡Dioses, superhéroes y monstruos mágicos!</p>
-                    <div class="ejemplo"><strong>🌟 Oaxaca:</strong> El mito de cómo el Sol y la Luna subieron al cielo para alumbrarnos.</div>
-                </div>
-                
-                <!-- Carta de la Leyenda -->
-                <div class="card leyenda">
-                    <h3>🗣️ LEYENDA</h3>
-                    <p>Hechos reales de un pueblo mezclados con magia y misterio.</p>
-                    <p><strong>¿Quiénes están?</strong> Personas comunes, fantasmas o animales del bosque.</p>
-                    <div class="ejemplo"><strong>🌲 Oaxaca:</strong> La Princesa Donají, una guerrera real grabada en nuestro escudo.</div>
-                </div>
-            </div>
-            <p>🚀 <strong>¿Estás listo?</strong> ¡Dale clic a la pestaña de <strong>Mapa</strong> para iniciar tu viaje!</p>
+        <div class="contenedor-principal">
+            <h2>📖 Narración Mística</h2>
+            <p style="color: #FFFBF2; font-size: 16px; line-height: 1.6;">
+                Aquí va el texto completo y detallado del mito de la Princesa Donají para leer de forma entretenida.
+            </p>
         </div>
     </div>
 
-    <!-- INTERFAZ 2: MAPA -->
-    <iframe id="mapa" class="view" src="mapa.php"></iframe>
+    <!-- ========================================== -->
+    <!-- 🧭 PESTAÑA 2: MAPA                          -->
+    <!-- ========================================== -->
+    <div id="mapa" class="view">
+        <div class="contenedor-principal">
+            <h2>🧭 Mapa de Aventuras Regionales</h2>
+            <p style="color: #FFFBF2;">Aquí se renderiza tu mapa de las regiones de Oaxaca sin que se encime con la lectura.</p>
+        </div>
+    </div>
 
-    <!-- INTERFAZ 3: JUEGOS -->
-    <iframe id="juegos" class="view" src="menu_juegos.php"></iframe>
+    <!-- ========================================== -->
+    <!-- 🎮 PESTAÑA 3: SECCIÓN DE JUEGOS             -->
+    <!-- ========================================== -->
+    <div id="juegos" class="view">
+  <div class="contenedor-principal" style="padding: 25px; border-color: #E6A341; display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
+    
+    <!-- TARJETA 1: ROMPECABEZAS -->
+    <div style="background: #FFFBF2; border: 4px solid #E6A341; border-radius: 20px; padding: 20px; text-align: center; width: 220px; box-shadow: 0 8px 16px rgba(0,0,0,0.2);">
+        <div style="font-size: 45px; margin-bottom: 10px;">🧩</div>
+        <h3 style="color: #8C0902; margin: 10px 0;">El Rompecabezas</h3>
+        <p style="color: #361A0C; font-size: 14px; min-height: 60px;">Responde los acertijos de Donají para armar la imagen mística.</p>
+        <button onclick="window.location.href='juegos/rompecabezas.php'" style="background: #8C0902; color: #FFFBF2; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; font-weight: bold;">Jugar 🎮</button>
+    </div>
 
+    <!-- TARJETA 2: MEMORAMA -->
+    <div style="background: #FFFBF2; border: 4px solid #E6A341; border-radius: 20px; padding: 20px; text-align: center; width: 220px; box-shadow: 0 8px 16px rgba(0,0,0,0.2);">
+        <div style="font-size: 45px; margin-bottom: 10px;">🃏</div>
+        <h3 style="color: #8C0902; margin: 10px 0;">El Memorama</h3>
+        <p style="color: #361A0C; font-size: 14px; min-height: 60px;">¡Encuentra los pares ocultos de La Llorona del Istmo!</p>
+        <button onclick="window.location.href='juegos/memorama.php'" style="background: #8C0902; color: #FFFBF2; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; font-weight: bold;">Jugar 🎮</button>
+    </div>
+
+    <!-- TARJETA 3: EL FLECHADOR -->
+    <div class="tarjeta-juego" style="background: #FFFBF2; border: 4px solid #E6A341; border-radius: 20px; padding: 20px; text-align: center; width: 220px; box-shadow: 0 8px 16px rgba(0,0,0,0.2);">
+        <div style="font-size: 45px; margin-bottom: 10px;">🏹</div>
+        <h3 style="color: #8C0902; margin: 10px 0;">El Flechador</h3>
+        <p style="color: #361A0C; font-size: 14px; min-height: 60px;">¡Atrapa las flechas sagradas del Sol y esquiva los rayos del cielo!</p>
+        <button onclick="window.location.href='juegos/flechador.php'" style="background: #8C0902; color: #FFFBF2; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; font-weight: bold;">Jugar 🎮</button>
+    </div>
+
+</div>
+
+    <!-- ========================================== -->
+    <!-- 🛠️ JAVASCRIPT DE FLUJO SÍNCRONO            -->
+    <!-- ========================================== -->
     <script>
         const audio = document.getElementById('bg-music');
 
-        // Función gamer interactiva para alternar vistas e intercambiar canciones al mismo tiempo
-        function tab(id, cancion) {
-            // Oculta todas las interfaces y apaga los botones dorados anteriores
+        function tab(pantalla, cancion) {
+            // 1. Apaga y esconde de golpe todos los bloques contenedores (.view)
             document.querySelectorAll('.view').forEach(v => v.classList.remove('activa'));
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('activa'));
             
-            // Enciende la interfaz y el botón seleccionado
-            document.getElementById(id).classList.add('activa');
-            event.currentTarget.classList.add('activa');
+            // 2. Apaga el relieve rojo de todos los botones de la barra
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('activa'));
 
-            // INTERCAMBIO DE AUDIO: Actualiza el archivo fuente y arranca el sonido
+            // 3. Enciende únicamente la sección correspondiente
+            const seccionDestino = document.getElementById(pantalla);
+            if (seccionDestino) {
+                seccionDestino.classList.add('activa');
+            }
+
+            // 4. Agrega el estilo tridimensional activo al botón presionado
+            if (window.event && window.event.currentTarget) {
+                window.event.currentTarget.classList.add('activa');
+            }
+
+            // 5. Intercambia la canción de fondo de manera segura
             audio.src = cancion;
             audio.play().catch(() => {});
         }
 
-        // Al iniciar por primera vez, reproduce automáticamente la canción de la pestaña Aprender
-        window.addEventListener('DOMContentLoaded', () => {
-            audio.src = "sonido/coldplay.mp3";
-            audio.play().catch(() => {});
+    // Carga inicial y redirección interactiva a la pestaña correcta
+window.addEventListener('DOMContentLoaded', () => {
+    // 1. Revisamos si la URL trae el recado de abrir juegos (?tab=juegos)
+    const parametros = new URLSearchParams(window.location.search);
+    const pestañaActiva = parametros.get('tab');
+
+    if (pestañaActiva === 'juegos') {
+        // Ejecutamos tu función nativa para encender la sección de las tarjetas y su música roja
+        tab('juegos', 'sonido/rojo.mp3');
+
+        // Buscamos el botón de la barra de navegación para ponerlo en modo activo
+        const botones = document.querySelectorAll('.tab-btn');
+        botones.forEach(b => {
+            // Si el texto del botón contiene la palabra "Juegos", lo activamos
+            if (b.innerText.includes('Juegos')) {
+                document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('activa'));
+                b.classList.add('activa');
+            }
         });
+    } else {
+        // Si no trae recado, arranca normal en la pestaña Aprender con Coldplay
+        tab('aprender', 'sonido/coldplay.mp3'); // Ajusta 'aprender' por el ID exacto de tu contenedor de lectura si es diferente
+    }
+});
+
     </script>
 </body>
 </html>

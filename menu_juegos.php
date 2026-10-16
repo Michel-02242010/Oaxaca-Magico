@@ -1,72 +1,104 @@
-<!-- 🎮 CONTENEDOR DE DESAFÍOS MÁGICOS -->
-<div class="grid-juegos-container" style="display: flex; justify-content: center; gap: 25px; margin-top: 30px; flex-wrap: wrap; padding: 0 20px;">
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            margin: 0;
+            padding: 10px;
+            background: transparent;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            height: auto;
+        }
 
-    <!-- 🧩 TARJETA 1: EL ROMPECABEZAS MÁGICO (VINCULADO A TU ARCHIVO) -->
-    <div class="card-flotante" onclick="location.href='rompecabezas.php'">
-        <div class="icono-animado">🧩</div>
-        <h3>El Rompecabezas</h3>
-        <p>Responde las preguntas de la Princesa Donají para ganar las 25 piezas y armar su hermosa imagen mística.</p>
+        .tarjeta-juego {
+            background: #FFFBF2;
+            border: 4px solid #E6A341;
+            border-radius: 20px;
+            padding: 15px;
+            text-align: center;
+            width: 165px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 240px;
+        }
+
+        .icono-juego {
+            font-size: 40px;
+            margin-bottom: 5px;
+        }
+
+        .tarjeta-juego h3 {
+            color: #8C0902;
+            font-size: 16px;
+            margin: 5px 0;
+        }
+
+        .tarjeta-juego p {
+            color: #361A0C;
+            font-size: 12px;
+            margin: 0 0 10px 0;
+            line-height: 1.3;
+        }
+
+        .tarjeta-juego button {
+            background: #8C0902;
+            color: #FFFBF2;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 13px;
+            transition: background 0.2s;
+            width: 100%;
+        }
+
+        .tarjeta-juego button:hover {
+            background: #B14A36;
+        }
+    </style>
+</head>
+<body>
+
+        <!-- TARJETA 1: ROMPECABEZAS -->
+    <div class="tarjeta-juego">
+        <div>
+            <div class="icono-juego">🧩</div>
+            <h3>El Rompecabezas</h3>
+            <p>Responde correctamente los acertijos de Donají para ganar.</p>
+        </div>
+        <!-- Alternativa: Abre el juego en una pestaña nueva para saltar el bloqueo -->
+        <button onclick="window.open('juegos/rompecabezas.php', '_blank')">Jugar 🎮</button>
     </div>
 
-    <!-- 🧠 TARJETA 2: TRIVIA RELÁMPAGO -->
-    <div class="card-flotante" onclick="location.href='#'" style="opacity: 0.85;">
-        <div class="icono-animado">🧠</div>
-        <h3>Trivia Relámpago</h3>
-        <p>Responde preguntas y demuestra tu sabiduría ancestral sobre los mitos y leyendas oaxaqueñas.</p>
+    <!-- TARJETA 2: MEMORAMA -->
+    <div class="tarjeta-juego">
+        <div>
+            <div class="icono-juego">🃏</div>
+            <h3>El Memorama</h3>
+            <p>¡Encuentra los pares ocultos inspirados en La Llorona!</p>
+        </div>
+        <button onclick="window.open('juegos/memorama.php', '_blank')">Jugar 🎮</button>
     </div>
 
-    <!-- 🕵️‍♂️ TARJETA 3: PALABRAS OCULTAS -->
-    <div class="card-flotante" onclick="location.href='#'" style="opacity: 0.85;">
-        <div class="icono-animado">🕵️‍♂️</div>
-        <h3>Palabras Ocultas</h3>
-        <p>Adivina el concepto secreto de las historias tradicionales antes de que se agoten tus vidas.</p>
+    <!-- TARJETA 3: EL FLECHADOR -->
+    <div class="tarjeta-juego">
+        <div>
+            <div class="icono-juego">🏹</div>
+            <h3>El Flechador</h3>
+            <p>¡Atrapa las flechas sagradas del Sol y esquiva los rayos!</p>
+        </div>
+        <button onclick="window.open('juegos/flechador.php', '_blank')">Jugar 🎮</button>
     </div>
 
-</div>
-
-<!-- 🎨 ESTILOS PARA EL EFECTO FLOTANTE DIVERTIDO -->
-<style>
-    .card-flotante {
-        background: #FFFBF2;
-        border: 4px solid #8C0902;
-        border-radius: 25px;
-        width: 240px;
-        padding: 25px;
-        text-align: center;
-        box-shadow: 0 10px 20px rgba(54, 26, 12, 0.15);
-        cursor: pointer;
-        transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease, border-color 0.2s;
-    }
-
-    /* 🔥 Al pasar el mouse, la tarjeta se eleva y cambia de color al tono amarillo oaxaqueño */
-    .card-flotante:hover {
-        transform: translateY(-12px);
-        box-shadow: 0 20px 30px rgba(140, 9, 2, 0.25);
-        border-color: #FECE79;
-    }
-
-    .icono-animado {
-        font-size: 45px;
-        margin-bottom: 10px;
-        transition: transform 0.3s ease;
-    }
-
-    .card-flotante:hover .icono-animado {
-        transform: scale(1.2) rotate(5deg);
-    }
-
-    .card-flotante h3 {
-        font-family: 'Fredoka One', cursive;
-        color: #361A0C;
-        margin: 10px 0;
-        font-size: 20px;
-    }
-
-    .card-flotante p {
-        font-size: 14px;
-        color: #5C3A21;
-        line-height: 1.5;
-        margin: 0;
-    }
-</style>
-
+</body>
+</html>
