@@ -131,7 +131,7 @@
     <!-- 👑 TU MENÚ SUPERIOR CON LAS LLAMADAS CORREGIDAS -->
     <div class="navbar">
         <button class="tab-btn activa" onclick="tab('aprender', 'sonido/coldplay.mp3')">📖 Aprender</button>
-        <button class="tab-btn" onclick="tab('mapa', 'sonido/dios.mp3')">🧭 Mapa</button>
+        <button class="tab-btn" onclick="window.location.href='index.html'">🧭 Mapa</button>
         <button class="tab-btn" onclick="tab('juegos', 'sonido/rojo.mp3')">🎮 Juegos</button>
     </div>
 
@@ -144,16 +144,6 @@
             <p style="color: #FFFBF2; font-size: 16px; line-height: 1.6;">
                 Aquí va el texto completo y detallado del mito de la Princesa Donají para leer de forma entretenida.
             </p>
-        </div>
-    </div>
-
-    <!-- ========================================== -->
-    <!-- 🧭 PESTAÑA 2: MAPA                          -->
-    <!-- ========================================== -->
-    <div id="mapa" class="view">
-        <div class="contenedor-principal">
-            <h2>🧭 Mapa de Aventuras Regionales</h2>
-            <p style="color: #FFFBF2;">Aquí se renderiza tu mapa de las regiones de Oaxaca sin que se encime con la lectura.</p>
         </div>
     </div>
 
@@ -186,6 +176,21 @@
         <p style="color: #361A0C; font-size: 14px; min-height: 60px;">¡Atrapa las flechas sagradas del Sol y esquiva los rayos del cielo!</p>
         <button onclick="window.location.href='juegos/flechador.php'" style="background: #8C0902; color: #FFFBF2; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; font-weight: bold;">Jugar 🎮</button>
     </div>
+    <!-- TARJETA 4: LOS CHANEQUES (NUEVA) -->
+            <div style="background: #FFFBF2; border: 4px solid #E6A341; border-radius: 20px; padding: 20px; text-align: center; width: 220px; box-shadow: 0 8px 16px rgba(0,0,0,0.2);">
+                <div style="font-size: 45px; margin-bottom: 10px;">🌿</div>
+                <h3 style="color: #8C0902; margin: 10px 0; font-family: 'Fredoka One', cursive;">Los Chaneques</h3>
+                <p style="color: #361A0C; font-size: 14px; min-height: 60px;">¡Resuelve los acertijos de la Sierra Sur y recupera los amuletos!</p>
+                <button onclick="window.location.href='juegos/chaneques.php'" style="background: #8C0902; color: #FFFBF2; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; font-weight: bold; width: 100%;">Jugar 🎮</button>
+            </div>
+                        <!-- TARJETA 5: EL REY CONDOY (NUEVA) -->
+            <div style="background: #FFFBF2; border: 4px solid #E6A341; border-radius: 20px; padding: 20px; text-align: center; width: 220px; box-shadow: 0 8px 16px rgba(0,0,0,0.2);">
+                <div style="font-size: 45px; margin-bottom: 10px;">👑</div>
+                <h3 style="color: #8C0902; margin: 10px 0; font-family: 'Fredoka One', cursive;">El Rey Condoy</h3>
+                <p style="color: #361A0C; font-size: 14px; min-height: 60px;">¡Usa la fuerza colosal del rey Mixe y defiende la Sierra Norte lanzando rocas gigantes!</p>
+                <button onclick="window.location.href='juegos/condoy.php'" style="background: #8C0902; color: #FFFBF2; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; font-weight: bold; width: 100%;">Jugar 🎮</button>
+            </div>
+
 
 </div>
 
@@ -196,27 +201,31 @@
         const audio = document.getElementById('bg-music');
 
         function tab(pantalla, cancion) {
-            // 1. Apaga y esconde de golpe todos los bloques contenedores (.view)
-            document.querySelectorAll('.view').forEach(v => v.classList.remove('activa'));
-            
-            // 2. Apaga el relieve rojo de todos los botones de la barra
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('activa'));
+    // 1. Apaga y esconde de golpe todos los bloques contenedores (.view)
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('activa'));
+    
+    // 2. Apaga el relieve rojo de todos los botones de la barra
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('activa'));
 
-            // 3. Enciende únicamente la sección correspondiente
-            const seccionDestino = document.getElementById(pantalla);
-            if (seccionDestino) {
-                seccionDestino.classList.add('activa');
-            }
+    // 3. Enciende únicamente la sección correspondiente
+    const seccionDestino = document.getElementById(pantalla);
+    if (seccionDestino) {
+        seccionDestino.classList.add('activa');
+    }
 
-            // 4. Agrega el estilo tridimensional activo al botón presionado
-            if (window.event && window.event.currentTarget) {
-                window.event.currentTarget.classList.add('activa');
-            }
-
-            // 5. Intercambia la canción de fondo de manera segura
-            audio.src = cancion;
-            audio.play().catch(() => {});
+    // 4. CORRECCIÓN: Busca el botón correcto de forma segura sin romper la página
+    document.querySelectorAll('.tab-btn').forEach(b => {
+        if (b.getAttribute('onclick') && b.getAttribute('onclick').includes(`'${pantalla}'`)) {
+            b.classList.add('activa');
         }
+    });
+
+    // 5. Intercambia la canción de fondo de manera segura
+    const audio = document.getElementById('bg-music');
+    if (audio && cancion) {
+        audio.src = cancion;
+        audio.play().catch(() => {});
+    }}
 
     // Carga inicial y redirección interactiva a la pestaña correcta
 window.addEventListener('DOMContentLoaded', () => {
