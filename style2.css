@@ -1,0 +1,380 @@
+/* ==========================================================================
+   ESTILOS GENERALES Y BASE DE LA TEMÁTICA OAXAQUEÑA
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Lilita+One&display=swap');
+
+
+@font-face {
+    font-family: 'Butter'; 
+    src: url('fuentes/Butterpop.ttf') format('truetype'); 
+}
+
+
+@font-face {
+    font-family: 'titulo'; 
+    src: url('fuentes/titulo.otf') format('truetype'); 
+}
+
+
+@font-face {
+    font-family: 'baby';
+    src: url('fuentes/Hello Baby.otf') format('truetype');
+    
+}
+@font-face {
+    font-family: 'bonis'; 
+    src: url('fuentes/KGPerfectPenmanship.ttf') format('truetype'); 
+    
+}
+
+
+@font-face {
+    font-family: 'bonis'; 
+    src: url('fuentes/texto.otf') format('truetype'); 
+    
+}
+
+body {
+    background-color: #401f0f; /* Fondo ultra oscuro exterior */
+    margin: 0;
+    padding: 60px 20px 90px 20px;
+    display: flex;
+    justify-content: center;
+}
+
+/* BORDE */
+.interfaz-principal {
+    background-color: #F3E3CC; 
+    border-radius: 32px;
+    padding: 30px;
+    max-width: 1180px;
+    width: 100%;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden; /* Evita que las luces se salgan de las esquinas redondeadas */
+}
+
+/* 1. Esta capa genera el gradiente de luces brillante */
+.interfaz-principal::before {
+    content: "";
+    padding-top: 100px;
+    position: absolute;
+    width: 150%;
+    height: 150%;
+    top: -25%;
+    left: -25%;
+    background: conic-gradient(
+        from 0deg at 50% 50%,
+        #351904, 
+        #8B3A00, 
+        #E08E00, 
+        #c99a62,
+        #351904
+    );
+    animation: moverBordeBrillante 4s linear infinite;
+    z-index: 0;
+}
+
+/* 2. ESTA ES LA CLAVE: Esta capa tapa el centro con tu color y deja ver solo la orilla */
+.interfaz-principal::after {
+    content: "";
+    position: absolute;
+    inset: 6px; 
+    background-color: #F3E3CC;
+    border-radius: 26px;
+    z-index: 1;
+    
+}
+
+/*  textos, bloques y botones floten por encima de las capas  */
+.interfaz-principal > *:not(.gradient-overlay) {
+    position: relative;
+    z-index: 2;
+}
+
+@keyframes moverBordeBrillante {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* Encabezado con el título principal */
+.encabezado-juego {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.titulo-rojo {
+    background:#4A291A ;
+    color: #c99a62;
+     font-family: "titulo", sans-serif;
+    font-size: 30px;
+    font-weight: 10px bold;
+    padding: 10px 40px;
+    border-radius: 50px;
+    display: inline-block;
+    border: 3px solid #4a291a;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    margin: 0 0 10px 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+
+/* ==========================================================================
+   SECCIÓN DE TARJETAS COMPARATIVAS (MITO Y LEYENDA)
+   ========================================================================== */
+.contenedor-bloques {
+    display: flex;
+    gap: 25px;
+    margin-bottom: 25px;
+}
+
+.bloque-concepto {
+    flex: 1;
+    background-color: #401f0f; /* Café intermedio */
+    border: 3px solid #df9e51;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: inset 0 0 15px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+}
+
+.titulo-concepto {
+    background:#6B3E24;
+    color: #c88f83;
+    font-family: "Butter", sans-serif;
+    font-size: 30px;
+    letter-spacing: 2px;
+    font-weight: bold;
+    text-align: center;
+    padding: 8px 0;
+    border-radius: 15px;
+    margin: 0 0 20px 0;
+    text-transform: uppercase;
+    border: 2px solid #df9e51;
+}
+
+.contenido-concepto {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    height: 100%;
+}
+
+/* Espacio para tus ilustraciones/imágenes */
+.ilustracion-espacio {
+    width: 40%;
+    height: 200px;
+    background-color: #2b160a;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+.imagen-mito {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 10px;
+}
+
+.imagen-leyenda {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 10px;
+}
+
+
+/* Lista de características con viñetas */
+.lista-caracteristicas {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.item-caracteristica {
+    background-color: #e8d0af; /* Fondo rojo de los renglones */
+    color: #4a291a;
+    padding: 10px 15px;
+    border-radius: 12px;
+    font-family: "bonis" ;
+    font-size: 15px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid #df9e51;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+}
+
+.icono-vinyeta {
+    font-size: 18px;
+    background-color: #401f0f;
+    padding: 4px;
+    border-radius: 50px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #df9e51;
+}
+
+/* ==========================================================================
+   SECCIÓN INFERIOR (SIMILITUDES Y BOTÓN)
+   ========================================================================== */
+.fila-inferior {
+    display: flex;
+    gap: 20px;
+    align-items: stretch;
+}
+
+.bloque-similitudes {
+    flex: 3;
+    background-color: #401f0f;
+    border: 3px solid #df9e51;
+    border-radius: 20px;
+    padding: 20px;
+    position: relative;
+}
+
+.titulo-similitudes {
+    background-color: #e8d0af;
+    color: #4a291a;
+    font-family: "baby", sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    border-radius: 50px;
+    border: 2px solid #df9e51;
+    position: absolute;
+    top: -15px;
+    left: 30px;
+}
+
+.grid-similitudes {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 15px;
+    gap: 15px;
+}
+
+.columna-similitud {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #ffffff;
+    font-family: "bonis";
+    font-size: 13.5px;
+    line-height: 1.3;
+    border-right: 1px dashed rgba(223, 158, 81, 0.4);
+    padding-right: 10px;
+    letter-spacing: 1px;
+}
+
+.columna-similitud:last-child {
+    border-right: none;
+}
+
+/* Botón interactivo */
+button {
+  margin-top: 30px;
+  padding: 1.3em 3em;
+  font-family: "Butter", sans-serif;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: bold;
+  color: #000;
+  background-color: #c99a62;
+  border: 2px solid #2b160a;
+  border-radius: 45px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+  outline: none;
+  
+}
+
+button:hover {
+  background-color: #2b160a;
+  box-shadow: 5px 15px 20px  rgba(201, 154, 98, 0.4);
+  color:#c99a62;
+  transform: translateY(-7px);
+  border: 2px solid #c99a62;
+}
+
+button:active {
+  transform: translateY(-1px);
+}
+/*--------------------------------------------------------------------------*/
+@media (max-width: 850px) {
+    .contenedor-bloques {
+        flex-direction: column !important;
+        gap: 20px;
+    }
+
+    .contenido-concepto {
+        flex-direction: column !important;
+        align-items: center;
+    }
+
+    .ilustracion-space, .lista-caracteristicas {
+        width: 100% !important;
+    }
+
+    .fila-inferior {
+        flex-direction: column !important;
+    }
+
+    .grid-similitudes {
+        flex-direction: column !important;
+    }
+}
+
+/* 1. Clase que aplicarás al elemento que quieres que flote */
+.efecto-flotante {
+    display: inline-block; /* O el display que ya tenga tu elemento */
+    
+    /* Sombra inicial suave para dar sensación de profundidad */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4); 
+    
+    /* Vincula la animación: se llama "flotar", dura 3 segundos, es suave (ease-in-out) e infinita */
+    animation: flotarContinuo 3s ease-in-out infinite;
+}
+
+/* 2. La magia de la animación: cambia la altura y la sombra al mismo tiempo */
+@keyframes flotarContinuo {
+    0% {
+        transform: translateY(0px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    }
+    50% {
+        transform: translateY(-12px); /* Eleva el elemento 12 píxeles */
+        
+        /* Al estar más alto, la sombra se vuelve más grande, más borrosa y más tenue */
+        box-shadow: 0 25px 25px rgba(0, 0, 0, 0.25); 
+    }
+    100% {
+        transform: translateY(0px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    }
+}
+

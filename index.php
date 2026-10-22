@@ -28,14 +28,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8"><title>Oaxaca Mágico!</title>
     <link href="https://googleapis.com" rel="stylesheet">
     <style>
+        @font-face {
+    font-family: 'titulo'; 
+    src: url('fuentes/titulo.otf') format('truetype'); 
+}
+
+        @font-face {
+    font-family: 'Butter'; 
+    src: url('fuentes/Butterpop.ttf') format('truetype'); 
+}
+
+
         body { font-family: 'Quicksand', sans-serif;
 
         background: linear-gradient(-45deg, #4A2E1B, #5C3A21, #8C4F2B, #361A0C);background-size: 400% 400%; animation: movF0 12s ease infinite; min-height: 100vh; margin: 0; display: flex; justify-content: center; align-items: center; overflow: hidden; position: relative; }
         @keyframes movF0 { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
         .intro-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #1A0F08, #361A0C); z-index: 100; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1); }
-        .title-main { font-family: 'Fredoka One', cursive; font-size: 56px; color: #FECE79; text-shadow: 4px 4px 0px #8C0902; margin: 0 0 10px 0; text-align: center; }
+        .title-main { font-family: 'titulo'; font-size: 80px; color: #FECE79; text-shadow: 4px 4px 0px #8C0902; margin: 0 0 10px 0; text-align: center; }
         .subtitle-sub { font-size: 20px; color: #FFFBF2; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 40px; text-shadow: 2px 2px 4px rgba(0,0,0,0.6); opacity: 0.9; }
-        .btn-empezar { font-family: 'Quicksand', sans-serif; background: linear-gradient(135deg, #E6A341, #8C0902); color: white; border: none; padding: 20px 50px; font-size: 24px; font-weight: 700; border-radius: 20px; cursor: pointer; animation: pulso 1.5s infinite alternate; text-transform: uppercase; box-shadow: 0 0 20px rgba(230,163,65,0.4); }
+        .btn-empezar { font-family:'Butter' ; background: linear-gradient(135deg, #E6A341, #8C0902); color: white; border: none; padding: 20px 50px; font-size: 30px; font-weight: 700; border-radius: 20px; cursor: pointer; animation: pulso 1.5s infinite alternate; text-transform: uppercase; box-shadow: 0 0 20px rgba(230,163,65,0.4);  letter-spacing: 3px; }
         @keyframes pulso { 0% { transform: scale(1); } 100% { transform: scale(1.06); box-shadow: 0 0 35px rgba(230,163,65,0.7); } }
         .estrella, .burbuja, .chispa { position: absolute; border-radius: 50%; pointer-events: none; }
         .estrella { background: #FFFBF2; width: 4px; height: 4px; box-shadow: 0 0 8px #FFF; animation: titilar 2s infinite ease-in-out; }

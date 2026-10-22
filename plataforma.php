@@ -147,16 +147,11 @@
         </div>
     </div>
 
-    <!-- ========================================== -->
-    <!-- 🧭 PESTAÑA 2: MAPA                          -->
-    <!-- ========================================== -->
-    <div id="mapa" class="view">
-        <div class="contenedor-principal">
-            <h2>🧭 Mapa de Aventuras Regionales</h2>
-            <p style="color: #FFFBF2;">Aquí se renderiza tu mapa de las regiones de Oaxaca sin que se encime con la lectura.</p>
-        </div>
-    </div>
-
+<div id="mapa" class="view">
+    <iframe src="OaxacaM%C3%A1gico1/index.html" 
+            style="width: 100%; height: 80vh; border: none; border-radius: 20px;">
+    </iframe>
+</div>
     <!-- ========================================== -->
     <!-- 🎮 PESTAÑA 3: SECCIÓN DE JUEGOS             -->
     <!-- ========================================== -->
