@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"><title>Donají Escape - Valles Centrales</title>
+    <link href="https://googleapis.com" rel="stylesheet">
+    <style>
+        body { background: #0b0502; color: #ffb703; font-family: 'Press Start 2P', sans-serif; font-size: 11px; text-align: center; margin: 0; padding: 20px; overflow: hidden; }
+        h2 { color: #ff5500; text-shadow: 0 0 10px #ff5500; font-size: 14px; margin-bottom: 10px; }
+        .contenedor-juego { position: relative; width: 650px; height: 350px; margin: 15px auto; }
+        canvas { background: #1a0f0a; border: 4px solid #ff5500; border-radius: 12px; position: absolute; top: 0; left: 0; z-index: 1; box-shadow: 0 0 25px rgba(255, 85, 0, 0.2); }
+        .overlay { position: absolute; top: 0; left: 0; width: 650px; height: 350px; background: rgba(11, 5, 2, 0.97); border: 4px solid #ff5500; border-radius: 12px; z-index: 10; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 25px; box-sizing: border-box; }
+        .box-titulo { color: #ff5500; font-size: 12px; margin-bottom: 15px; text-shadow: 0 0 8px #ff5500; }
+        .box-texto { color: #FFF; font-size: 10px; line-height: 1.8; margin-bottom: 20px; text-align: center; }
+        .btn-game { padding: 10px 20px; font-family: 'Press Start 2P', sans-serif; font-size: 9px; font-weight: bold; background: #000; color: #ffb703; border: 2px solid #ffb703; border-radius: 5px; cursor: pointer; transition: all 0.2s; }
+        .btn-game:hover { background: #ffb703; color: #000; box-shadow: 0 0 15px #ffb703; }
+        .btn-ans { border-color: #ff5500; color: #ff5500; width: 85%; margin: 5px; }
+        .btn-ans:hover { background: #ff5500; color: #000; box-shadow: 0 0 15px #ff5500; }
+    </style>
+</head>
+<body>
+    <h2>🏃 FASE 2: El Escape de Zaachila</h2>
+    
+    <div class="contenedor-juego">
+        <!-- Pantalla Inicial -->
+        <div id="pantalla-inicio" class="overlay">
+            <div class="box-titulo">📜 PLAN DE INFILTRACIÓN</div>
+            <div class="box-texto">
+                Donají ha sido retenida como rehén de paz en el cuartel de Zaachila.<br><br>
+                Mueve el mouse a los lados para guiar los destellos de tu antorcha. Responde las preguntas históricas del consejo de guerra para activar los pasadizos de escape y abrir la gran compuerta de piedra.
+            </div>
+            <button class="btn-game" onclick="iniciarEscape()">INICIAR RESCATE</button>
+        </div>
+
+        <!-- Pantalla de Trivia Dinámica -->
+        <div id="pantalla-trivia" class="overlay" style="display: none;">
+            <div class="box-titulo">❔ ESTRATEGIA DE ESCAPE</div>
+            <div class="box-texto" id="trivia-pregunta">Pregunta</div>
+            <button class="btn-game btn-ans" id="opc-0" onclick="evaluarEscape(0)">Opción A</button>
+            <button class="btn-game btn-ans" id="opc-1" onclick="evaluarEscape(1)">Opción B</button>
+        </div>
+
+        <!-- Pantalla Feedback -->
+        <div id="pantalla-resultado" class="overlay" style="display: none;">
+            <div class="box-titulo" id="res-titulo">PASADIZO ABALIZADO</div>
+            <div class="box-texto" id="res-texto">Mensaje</div>
+            <button class="btn-game" id="btn-accion-escape" onclick="proximoPasoEscape()">AVANZAR POR LAS DUNAS</button>
+        </div>
+
+        <canvas id="canvasEscape" width="650" height="350"></canvas>
+    </div>
+
+<script>
+const cvs = document.getElementById("canvasEscape"), ctx = cvs.getContext("2d");
+let targetX = 100, personajeX = 100, juegoCorriendo = false, compuertaAbierta = false, progresoPuntos = 0;
+
+// Banco dinámico con 4 preguntas sobre la resistencia histórica en Zaachila
+const bancoEscape = [
+    { q: "¿En qué antigua capital mixteco-zapoteca se encontraba retenida Donají?", ops: ["En la fortaleza militar de Zaachila 👍", "En la zona templada de Huatulco ❌"], correcta: 0 },
+    { q: "¿Por qué los mixtecas mantuvieron a la princesa como rehén de paz?", ops: ["Como garantía para evitar un ataque sorpresa del rey zapoteca 👍", "Para obligarla a casarse con el sumo sacerdote de Mitla ❌"], correcta: 0 },
+    { q: "¿Qué facción envió guerreros secretos por la noche para intentar rescatarla?", ops: ["Los zapotecas fieles a su nación 👍", "Los conquistadores europeos del norte ❌"], correcta: 0 },
+    { q: "¿Cuál fue la respuesta de Donají al descubrir el plan de rescate nocturno?", ops: ["Alentó la resistencia prefiriendo el bien de su pueblo 👍", "Trató de huir sola hacia los valles centrales ❌"], correcta: 0 }
+];
+let retoActual = {};
+
+cvs.onmousemove = (e) => {
+    if (!juegoCorriendo) return;
+    let rect = cvs.getBoundingClientRect();
+    targetX = e.clientX - rect.left;
+};
+
+function cargarRetoEscape() {
+    retoActual = bancoEscape[Math.floor(Math.random() * bancoEscape.length)];
+    document.getElementById("trivia-pregunta").innerText = retoActual.q;
+    document.getElementById("opc-0").innerText = retoActual.ops;
+    document.getElementById("opc-1").innerText = retoActual.ops;
+    document.getElementById("pantalla-trivia").style.display = "flex";
+    juegoCorriendo = false;
+}
+
+function iniciarEscape() {
+    document.getElementById("pantalla-inicio").style.display = "none";
+    juegoCorriendo = true;
+    cargarRetoEscape();
+    loop();
+}
+
+function evaluarEscape(opcion) {
+    document.getElementById("pantalla-trivia").style.display = "none";
+    const resTitulo = document.getElementById("res-titulo");
+    const resTexto = document.getElementById("res-texto");
+
+    if (opcion === retoActual.correcta) {
+        progresoPuntos += 34;
+        compuertaAbierta = true;
+        resTitulo.innerText = "🏆 MECANISMO ACTIVADO";
+        resTitulo.style.color = "#00ffcc";
+        resTexto.innerHTML = "¡Excelente respuesta estratégica! Los engranajes de piedra ceden. Has abierto la compuerta secreta de escape de Zaachila.";
+    } else {
+        compuertaAbierta = false;
+        resTitulo.innerText = "🚨 ALERTA EN EL CUARTEL";
+        resTitulo.style.color = "#ff3333";
+        resTexto.innerHTML = "¡Error de estrategia! Los guardias refuerzan la vigilancia. La compuerta permanece cerrada bloqueando tu salida.";
+    }
+    document.getElementById("pantalla-resultado").style.display = "flex";
+}
+
+function proximoPasoEscape() {
+    document.getElementById("pantalla-resultado").style.display = "none";
+    
+    if (progresoPuntos >= 100) {
+        document.getElementById("res-titulo").innerText = "🥇 LIBERTAD DE LOS VALLES";
+        document.getElementById("res-titulo").style.color = "#00ffcc";
+        document.getElementById("res-texto").innerText = "¡Misión completada con éxito! Donají ha sido rescatada y el honor de los valles está a salvo.";
+        document.getElementById("btn-accion-escape").innerText = "REINICIAR ESCAPE";
+        document.getElementById("btn-accion-escape").onclick = () => location.reload();
+        document.getElementById("pantalla-resultado").style.display = "flex";
+    } else {
+        compuertaAbierta = false;
+        personajeX = 100;
+        juegoCorriendo = true;
+        cargarRetoEscape();
+    }
+}
+
+function loop() {
+    if (!juegoCorriendo && !compuertaAbierta) return;
+
+    ctx.clearRect(0, 0, cvs.width, cvs.height);
+
+    // Desplazamiento elástico amortiguado del personaje
+    if (juegoCorriendo) {
+        personajeX += (targetX - personajeX) * 0.12;
+        personajeX = Math.max(50, Math.min(500, personajeX));
+    } else if (compuertaAbierta && personajeX < 600) {
+        personajeX += 4; // El personaje avanza de forma autónoma hacia la salida si ganó
+    }
+
+    // Dibujado vectorial de la gran compuerta de piedra (Evita emojis)
+    ctx.save();
+    ctx.fillStyle = compuertaAbierta ? "#33221a" : "#615249";
+    ctx.fillRect(560, 100, 40, 150); // Marco o pasadizo
+    ctx.strokeStyle = "#ff5500"; ctx.lineWidth = 3;
+    ctx.strokeRect(560, 100, 40, 150);
+    ctx.restore();
+
+    // Dibujado del personaje con antorcha de neón naranja (Evita texto crudo)
+    ctx.save();
+    ctx.shadowBlur = 15; ctx.shadowColor = "#ffb703";
+    ctx.fillStyle = "#ff5500"; ctx.fillRect(personajeX - 12, 160, 24, 40); // Cuerpo
+    ctx.fillStyle = "#ffcc99"; ctx.beginPath(); ctx.arc(personajeX, 148, 8, 0, Math.PI*2); ctx.fill(); // Cabeza
+    // Haz de fuego de la antorcha
+    ctx.fillStyle = "#ffb703"; ctx.beginPath(); ctx.moveTo(personajeX + 15, 155); ctx.lineTo(personajeX + 22, 140); ctx.lineTo(personajeX + 27, 155); ctx.fill();
+    ctx.restore();
+
+    // HUD de Progreso
+    ctx.fillStyle = "#ffb703"; ctx.font = "8px 'Press Start 2P'"; ctx.textAlign = "left";
+    ctx.fillText("ESCAPE PROGRESS: " + Math.min(100, progresoPuntos) + "%", 20, 35);
+
+    // Detectar si el personaje cruzó exitosamente la compuerta abierta
+    if (compuertaAbierta && personajeX >= 560) {
+        compuertaAbierta = false;
+        evaluarEscape(retoActual.correcta); // Dispara automáticamente la pantalla de victoria/progreso
+    }
+
+    if (juegoCorriendo || compuertaAbierta) {
+        requestAnimationFrame(loop);
+    }
+}
+</script>
+</body>
+</html>
+

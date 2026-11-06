@@ -16,17 +16,15 @@ if (isset($_POST['usuario']) && isset($_POST['contrasena'])) {
             $_SESSION['alumno_id'] = $fila['id'];
             $_SESSION['alumno_nombre'] = $fila['nombre_alumno'];
             
-            // Redirección inmediata a la plataforma principal con pestañas
-            header("Location: plataforma.php");
-            exit();
-        } else {
-            echo "<script>alert('contraseña incorrecta'); window.location='index.php';</script>";
-        }
-    } else {
-        echo "<script>alert('Alumno no registrado'); window.location='index.php';</script>";
-    }
+            // Redirección inmediata a la pantalla intermedia tras un ingreso exitoso
+           if (isset($_POST['ir_al_mapa'])) {
+    header("Location: index.html");
 } else {
-    header("Location: index.php");
-    exit();
+    header("Location: inter.php");
+}
+
+            exit();
+        }
+    }
 }
 ?>

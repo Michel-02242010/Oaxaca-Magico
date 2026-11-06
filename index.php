@@ -9,17 +9,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $f = mysqli_fetch_assoc($res);
             if ($p == $f['contrasena']) {
                 $_SESSION['alumno_id'] = $f['id']; $_SESSION['alumno_nombre'] = $f['nombre_alumno'];
-                header("Location: plataforma.php"); exit();
-            } else $error = "¡Contraseña incorrecta!";
+                              if (isset($_POST['ir_al_mapa'])) {
+                    header("Location: index.html");
+                } else {
+                    header("Location: inter.php");
+                }
+                exit();
+            } else {
+                $error = "¡Contraseña incorrecta!";
+            }
+
         } else {
             // ¡EL TRUCO MÁGICO!: Si no existe, lo guarda automáticamente en la base de datos
             $ins = mysqli_query($conexion, "INSERT INTO usuarios (nombre_alumno, usuario, contrasena, puntos_totales) VALUES ('$u_sql', '$u_sql', '$p', 0)");
             if ($ins) {
                 $_SESSION['alumno_id'] = mysqli_insert_id($conexion); $_SESSION['alumno_nombre'] = $u;
-                header("Location: plataforma.php"); exit();
+                header("Location: inter.php"); exit();
             } else $error = "¡Error al registrar el alumno!";
         }
-    } else { $_SESSION['alumno_nombre'] = $_POST['usuario']; header("Location: plataforma.php"); exit(); }
+    } else { $_SESSION['alumno_nombre'] = $_POST['usuario']; header("Location: inter.php"); exit(); }
 }
 ?>
 <!DOCTYPE html>
@@ -62,11 +70,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         input { font-family: 'Quicksand', sans-serif; width: 100%; padding: 14px 18px; box-sizing: border-box; border-radius: 14px; border: 2px solid #5C3A21; font-size: 16px; font-weight: 700; color: #fff; background: #2B160A; outline: none; margin-bottom: 16px; }
         input:focus { border-color: #FECE79; background: #1A0F08; }
         .btn-jugar { font-family: 'Quicksand', sans-serif; background: linear-gradient(135deg, #E6A341, #8C0902); color: #fff; border: none; padding: 16px; font-size: 19px; font-weight: 700; border-radius: 16px; cursor: pointer; width: 100%; margin-top: 10px; }
+        .contenedor-casilla { display: flex; align-items: center; gap: 10px; margin: 5px 0 15px 4px; color: #FFFBF2; font-size: 14px; font-weight: bold; text-align: left; cursor: pointer; }
+        .contenedor-casilla input { width: auto; margin: 0; accent-color: #E6A341; cursor: pointer; }
+
     </style>
 </head>
 <body>
+    <!-- Botón solicitado por la profa, se activa solo en esta pantalla -->
+    <button type="button" onclick="irAlLoginDirecto()" id="btn-profa-login" style="position: fixed; top: 25px; right: 25px; z-index: 99999; font-family: 'Quicksand', sans-serif; background: linear-gradient(135deg, #E6A341, #8C0902); color: white; border: 3px solid #FECE79; padding: 12px 24px; font-size: 16px; font-weight: bold; border-radius: 50px; cursor: pointer; box-shadow: 0 8px 20px rgba(0,0,0,0.5); display: none;">
+        🏰 YA TENGO UNA CUENTA 🗺️
+    </button>
     <audio id="musica" src="rojo.mp3" loop></audio>
-
+        
     <div class="estrella" style="top: 15%; left: 12%;"></div>
     <div class="estrella" style="top: 25%; left: 78%;"></div>
     <div class="estrella" style="top: 70%; left: 18%;"></div>
@@ -85,11 +100,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div id="loginBox" class="login-box <?php echo !empty($error) ? 'mostrar' : ''; ?>">
         <h1>¡Hola, <span>Amig@</span>!</h1><p>Escribe tus datos para comenzar la aventura.</p>
         <?php if(!empty($error)): ?><p style="color:#FF8A8A; font-weight:700; margin:0 0 15px;"><?php echo $error; ?></p><?php endif; ?>
-        <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+       <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" onsubmit="guardarUsuarioMistico()">
             <label class="lbl-datos">Nombre:</label>
             <input type="text" name="usuario" placeholder="Escribe tu usuario aquí" required autocomplete="off">
-            <label class="lbl-datos">Grupo:</label>
-            <input type="text" name="Grupo" placeholder="Escribe tu grupo" required autocomplete="off">
+            <div id="contenedor-grupo">
+    <label class="lbl-datos" id="lbl-grupo">Grupo:</label>
+    <input type="text" name="Grupo" id="txt-grupo" placeholder="Escribe tu grupo" required autocomplete="off">
+</div>
             <label class="lbl-datos">Contraseña:</label>
 <div class="password-contenedor" style="position: relative; width: 100%;">
     <input type="password" name="contrasena" id="txt-contrasena" placeholder="Escribe tu clave secreta" required style="width: 100%; padding-right: 45px; box-sizing: border-box;">
@@ -104,6 +121,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <button class="btn-jugar" type="submit">INGRESAR</button>
         </form>
         <script>
+function irAlLoginDirecto() {
+    const contenedorGrupo = document.getElementById('contenedor-grupo');
+    const txtGrupo = document.getElementById('txt-grupo');
+    const btnEnviar = document.querySelector('.btn-jugar');
+    const tituloCaja = document.querySelector('#loginBox h1');
+
+    // Creamos la marca oculta para avisarle a PHP que vaya al mapa
+    let checkMapa = document.querySelector('input[name="ir_al_mapa"]');
+    if (!checkMapa) {
+        checkMapa = document.createElement('input');
+        checkMapa.type = 'hidden';
+        checkMapa.name = 'ir_al_mapa';
+        document.querySelector('form').appendChild(checkMapa);
+    }
+
+    // Modificamos la interfaz para el niño con cuenta
+    if (contenedorGrupo) contenedorGrupo.style.display = 'none';
+    if (txtGrupo) txtGrupo.removeAttribute('required');
+    if (tituloCaja) tituloCaja.innerHTML = "¡Inicia <span>Sesión</span>!";
+    if (btnEnviar) btnEnviar.innerText = "INGRESAR AL MAPA ➔";
+    
+    checkMapa.value = 'si'; // Activa la redirección directa a plataforma.php
+
+    // Si la pantalla negra inicial estaba activa, la saltamos automáticamente
+    const introScreen = document.getElementById('introScreen');
+    const loginBox = document.getElementById('loginBox');
+    if (introScreen) introScreen.style.transform = 'translateY(-100%)';
+    if (loginBox) loginBox.classList.add('mostrar');
+}
+
 function togglePassword() {
     const inputPass = document.getElementById('txt-contrasena');
     const svgOjo = document.getElementById('svg-ojo');
@@ -119,18 +166,30 @@ function togglePassword() {
         svgOjo.setAttribute('stroke', '#FFFFFF');
         svgOjo.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>';
     }
-}
-</script>
-
+        }
+        </script>
     </div>
-
     <script>
+        
+        // Esta función memoriza el nombre del niño si decide iniciar sesión manualmente
+        function guardarUsuarioMistico() {
+            const inputUsuario = document.querySelector('input[name="usuario"]');
+            if (inputUsuario && inputUsuario.value.trim() !== "") {
+                localStorage.setItem('explorador_usuario', inputUsuario.value.trim());
+            }
+        }
+
         <?php if (!empty($error)): ?> document.getElementById('introScreen').style.transform = 'translateY(-100%)'; document.getElementById('loginBox').classList.add('mostrar'); <?php endif; ?>
-        document.getElementById('btnEmpezar').addEventListener('click', function() {
+               document.getElementById('btnEmpezar').addEventListener('click', function() {
             document.getElementById('musica').play().catch(() => {});
             document.getElementById('introScreen').style.transform = 'translateY(-100%)';
-            setTimeout(() => { document.getElementById('loginBox').classList.add('mostrar'); }, 400);
+            setTimeout(() => { 
+                document.getElementById('loginBox').classList.add('mostrar'); 
+                // 🌟 Despierta el botón morado solo aquí en la pantalla café
+                document.getElementById('btn-profa-login').style.display = 'block';
+            }, 400);
         });
+
     </script>
 </body>
 </html>
