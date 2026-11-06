@@ -1,0 +1,412 @@
+@font-face {
+    font-family: 'titulo';
+    src: url('fuentes/titulo.otf') format('truetype');
+}
+
+@font-face {
+    font-family: 'texto'; 
+    src: url('fuentes/texto.otf') format('truetype'); 
+    
+}
+@font-face {
+    font-family: 'butter'; 
+    src: url('fuentes/butter.otf') format('truetype'); 
+    
+}
+
+
+body{
+    background-color: #351904;
+}
+
+/* 🟫 EL LIENZO PRINCIPAL DEL JUEGO */
+.escena-codice-rpg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 5;
+    background-color: #351904; /* El café muy oscuro místico que elegiste */
+    overflow: hidden;
+}
+
+/* 📖 EL CONTENEDOR DEL LIBRO (Plano y visible por ahora) */
+.libro-contenedor {
+    width: 1000px;
+    height: 660px;
+    background-image: url('../img_libro/book.png'); /* Ruta a la raíz de tu proyecto */
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    justify-content: space-between;
+    padding: 120px 105px;
+    box-sizing: border-box;
+    border: 3px solid red; /* 👈 BORDE ROJO TEMPORAL de calibración */
+}
+
+/* 📑 CONFIGURACIÓN DE LAS DOS HOJAS */
+.pagina-libro {
+    width: 45%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    box-sizing: border-box;
+    background-color: rgba(255, 255, 255, 0.05); /* Brillo temporal para ver el espacio */
+}
+
+/* 🏷️ ESTILOS DE LOS TÍTULOS MEDIEVALES */
+.titulo-pagina {
+    font-family: 'titulo';
+    font-size: 32px;
+    color: #4A0502;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* ➖ LÍNEA SEPARADORA DE ADORNO */
+.separador {
+    width: 100px;
+    height: 2px;
+    background-color: #824f24;
+    margin-bottom: 20px;
+}
+
+/* 🖼️ CONTENEDORES PARA TUS IMÁGENES DE IA */
+.contenedor-ilustracion {
+    width: 100%;
+    height: 200px;
+    margin-top: 10px;
+    margin-bottom: auto; /* Empuja el botón hacia el puro fondo de la página */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.contenedor-ilustracion img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* ==========================================================================
+   🎛️ BOTÓN INTERACTIVO INTEGRADO DE UIVERSE (TEMATIZADO RPG)
+   ========================================================================== */
+
+.boton-uiverse-rpg {
+  
+    display: inline-block;
+    width: 160px;
+    height: 46px;
+    border-radius: 6px;
+    border: 2px solid #3b1907; 
+    background-color: #3b1907; /* 🚀 Forzamos el color café madera sólido */
+    position: relative;
+    overflow: hidden;
+    transition: all 0.5s ease-in;
+    z-index: 1;
+    cursor: pointer;
+    margin-bottom: 12px; 
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    margin-bottom: 70px;
+}
+
+
+/* Las dos cortinas internas animadas */
+.boton-uiverse-rpg::before,
+.boton-uiverse-rpg::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 0;
+    height: 100%;
+    transform: skew(15deg);
+    transition: all 0.5s;
+    overflow: hidden;
+    z-index: -1;
+}
+
+/* Cortina izquierda (Cambia a Rojo Vino) */
+.boton-uiverse-rpg::before {
+    left: -10px;
+    background: #895737; 
+}
+
+/* Cortina derecha (Cambia a Café Oscuro Místico) */
+.boton-uiverse-rpg::after {
+    right: -10px;
+    background: #c08552; 
+}
+
+/* Efecto Hover: Las cortinas se juntan al centro al pasar el mouse */
+.boton-uiverse-rpg:hover::before,
+.boton-uiverse-rpg:hover::after {
+    width: 58%;
+}
+
+/* Estilo del texto en estado normal (Crema pergamino) */
+.boton-uiverse-rpg span {
+    color: #FBECC3;
+    font-family: 'butter';
+    font-size: 14px;
+    font-weight: bold;
+    transition: all 0.3s ease-in;
+    letter-spacing: 1px;
+}
+
+
+#btn-leyenda{
+    font-family: 'butter';
+    font-size: 14px;
+    letter-spacing: 1px;
+    color: #FBECC3;
+}
+
+#btn-mito{
+    font-family: 'butter';
+    font-size: 14px;
+    letter-spacing: 1px;
+    color: #FBECC3;
+}
+
+
+
+.contenido-texto {
+    width: 100%;
+    text-align: left;
+    font-family: sans-serif;
+    font-size: 13.5px;
+    color: #291104;     /* Café oscuro legible sobre pergamino */
+    line-height: 1.4;
+    display: block !important; /* Forzamos a que exista en el espacio */
+    opacity: 1 !important;     /* Asegura que no se vuelva invisible */
+    height: auto !important;   /* Toma su tamaño real */
+    margin-top: 10px;
+    margin-bottom: auto;       /* 🚀 TRUCO CLAVE: Empuja el botón hacia abajo, ordenando la explicación ARRIBA del botón */
+}
+
+.contenido-texto p {
+    margin: 0 0 8px 0; /* Espaciado compacto entre viñetas */
+}
+
+/* 🖼️ TAMAÑO ESTABLE DE LOS MARCOS DE IMAGEN ORIGINALES */
+.contenedor-ilustracion {
+    width: 100%;
+    height: 140px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.contenedor-ilustracion img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Reducimos un poco la altura fija de la ilustración para que el texto tenga su propio espacio */
+.contenedor-ilustracion {
+    height: 140px; 
+}
+
+/* 🔦 CAPA DE OSCURIDAD TOTAL DE LA ANTORCHA */
+#capa-antorcha {
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    /* Nace centrada por defecto usando el café oscuro que elegiste */
+    background: radial-gradient(circle 150px at 50% 50%, transparent 0%, rgba(26, 15, 8, 0.96) 100%);
+    z-index: 10; /* Un número alto para que cubra el libro y solo deje ver a través del círculo */
+    pointer-events: none; /* 🚀 TRUCO CLAVE: Hace que el mouse "atraviese" la oscuridad para poder picar los botones */
+}
+
+
+/* ==========================================================================
+   🚀 PASO 5: SISTEMA DE ZOOM Y ESTADOS DEL CODICE (CALIBRADO)
+   ========================================================================== */
+
+.contenido-texto {
+    width: 100%;
+    text-align: left;
+    font-family: 'texto';
+    font-size: 13.5px;
+    color: #291104;     
+    line-height: 1.4;
+    
+    /* 🚀 TRUCO CLAVE: Nace completamente oculto y encogido en la vista general */
+    display: none !important; 
+    opacity: 0;
+    margin-top: 10px;
+    margin-bottom: auto; /* Empuja el botón al fondo cuando se active */
+}
+
+.contenido-texto p {
+    margin: 0 0 8px 0;
+}
+
+/* 🖼️ MARCOS DE IMAGEN ORIGINALES (Centrados y estables al inicio) */
+.contenedor-ilustracion {
+    width: 100%;
+    height: 160px; /* Un poco más altos al inicio para que luzcan tus personajes */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto 0; /* Los centra verticalmente en el pergamino */
+}
+
+.contenedor-ilustracion img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+
+
+/* ==========================================================================
+   🔄 EFECTOS DE MOVIMIENTO DEL LIBRO (TRANSFORMACIONES EN 3D)
+   ========================================================================== */
+
+/* Le agregamos una transición suave al libro para que el zoom no sea brusco */
+.libro-contenedor {
+    transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* ESTADO A: ZOOM EN EL MITO (Hoja Izquierda) */
+/* Agranda el libro y lo desplaza a la derecha para centrar la hoja izquierda */
+.zoom-izquierdo {
+    transform: scale(1.4) translateX(18%);
+}
+
+/* Oculta suavemente la hoja derecha que no estamos usando */
+.zoom-izquierdo #hoja-leyenda {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+/* ESTADO B: ZOOM EN LA LEYENDA (Hoja Derecha) */
+/* Agranda el libro y lo desplaza a la izquierda para centrar la hoja derecha */
+.zoom-derecho {
+    transform: scale(1.4) translateX(-18%);
+}
+
+/* Oculta suavemente la hoja izquierda que no estamos usando */
+.zoom-derecho #hoja-mito {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+
+
+
+
+/* 1. Despierta el texto informativo del Mito (Izquierda) ARRIBA del botón */
+.modo-explorar-mito #hoja-mito .contenido-texto {
+    display: block !important;
+    opacity: 1 !important;
+    animation: aparecerTexto 0.5s ease forwards;
+}
+
+/* 2. Oculta la imagen original del guerrero en la izquierda */
+.modo-explorar-mito #hoja-mito #ilustracion-original-mito {
+    display: none !important;
+}
+
+/* 3. Limpia por completo la hoja de la Leyenda (Derecha) */
+.modo-explorar-mito #hoja-leyenda .titulo-pagina,
+.modo-explorar-mito #hoja-leyenda .separador,
+.modo-explorar-mito #hoja-leyenda #texto-leyenda,
+.modo-explorar-mito #hoja-leyenda .boton-uiverse-rpg,
+.modo-explorar-mito #hoja-leyenda #ilustracion-original-leyenda {
+    display: none !important;
+}
+
+/* 4. Muestra el clon del guerrero centrado en la hoja derecha vacía */
+.modo-explorar-mito #hoja-leyenda #caja-clon-destino {
+    display: flex !important;
+    width: 100% !important;
+    height: 100% !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin: auto 0 !important;
+}
+
+
+/* --------------------------------------------------------------------------
+   CASO 2: CUANDO SE EXPLORA LA LEYENDA (Imagen viaja a la Izquierda)
+   -------------------------------------------------------------------------- */
+
+/* 1. Despierta el texto informativo de la Leyenda (Derecha) ARRIBA del botón */
+.modo-explorar-leyenda #hoja-leyenda #texto-leyenda {
+    display: block !important;
+    opacity: 1 !important;
+    animation: aparecerTexto 0.5s ease forwards;
+}
+
+/* 2. Oculta la imagen original de la Llorona en la derecha */
+.modo-explorar-leyenda #hoja-leyenda #ilustracion-original-leyenda {
+    display: none !important;
+}
+
+/* 3. Limpia por completo la hoja del Mito (Izquierda) */
+.modo-explorar-leyenda #hoja-mito .titulo-pagina,
+.modo-explorar-leyenda #hoja-mito .separador,
+.modo-explorar-leyenda #hoja-mito .contenido-texto,
+.modo-explorar-leyenda #hoja-mito .boton-uiverse-rpg,
+.modo-explorar-leyenda #hoja-mito #ilustracion-original-mito {
+    display: none !important;
+}
+
+/* 4. Muestra el clon de la Llorona centrado en la hoja izquierda vacía */
+.modo-explorar-leyenda #hoja-mito #caja-clon-destino {
+    display: flex !important;
+    width: 100% !important;
+    height: 100% !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin: auto 0 !important;
+}
+
+
+/* --------------------------------------------------------------------------
+   🖼️ ANIMACIÓN Y ESTILOS PARA LA IMAGEN EN LA HOJA EN BLANCO
+   -------------------------------------------------------------------------- */
+#caja-clon-destino img {
+    width: 95% !important;
+    height: auto !important;
+    max-height: 380px !important;
+    object-fit: contain !important;
+    filter: drop-shadow(0 8px 16px rgba(0,0,0,0.4)) !important;
+}
+
+@keyframes aparecerTexto {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================================================
+   🔎 EFECTOS DE SÚPER ZOOM JUNTOS CON LA MUDANZA
+   ========================================================================== */
+
+/* Cuando exploras el Mito: el libro se agranda y se mueve a la derecha para centrar la hoja izquierda */
+.libro-contenedor.modo-explorar-mito {
+    transform: scale(1.35) translateX(15%) !important;
+}
+
+/* Cuando exploras la Leyenda: el libro se agranda y se mueve a la izquierda para centrar la hoja derecha */
+.libro-contenedor.modo-explorar-leyenda {
+    transform: scale(1.35) translateX(-15%) !important;
+}

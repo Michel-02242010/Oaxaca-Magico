@@ -147,15 +147,13 @@
         </div>
     </div>
 
-<<<<<<< HEAD
+
 <div id="mapa" class="view">
     <iframe src="OaxacaM%C3%A1gico1/index.html" 
             style="width: 100%; height: 80vh; border: none; border-radius: 20px;">
     </iframe>
 </div>
-=======
->>>>>>> f942325f87ae2fe3ee1944e0c3bd8cf8a56e5110
-    <!-- ========================================== -->
+<!-- ========================================== -->
     <!-- 🎮 PESTAÑA 3: SECCIÓN DE JUEGOS             -->
     <!-- ========================================== -->
     <div id="juegos" class="view">

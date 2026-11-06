@@ -12,7 +12,7 @@ $nombre_usuario = isset($_SESSION['usuario']) ? $_SESSION['usuario'] : 'Estudian
     <title>Mito o Leyenda - Plataforma Oaxaca</title>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-    <link rel="stylesheet" href="style2.css">
+    <link rel="stylesheet" href="css/style2.css">
 </head>
 <body>
     

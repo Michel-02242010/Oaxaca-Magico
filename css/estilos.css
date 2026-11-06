@@ -1,3 +1,12 @@
+           @font-face {
+    font-family: 'titulo'; 
+    src: url('fuentes/titulo.otf') format('truetype'); 
+}
+
+@font-face {
+    font-family: 'texto';
+    src: url('fuentes/texto.otf') format('truetype');
+}
 
 /* 
    CONFIGURACIÓN GENERAL
@@ -10,13 +19,10 @@
 
 body {
     min-height: 100vh;
-    background:
-        radial-gradient(
-            circle at 50% 45%,
-            #65451f 0%,
-            #382714 45%,
-            #17130e 100%
-        );
+    background: linear-gradient(-45deg, #361A0C, #442916, #53290e, #361A0C);
+    background-size: 400% 400%; animation: movF0 12s ease infinite; 
+    min-height: 100vh; margin: 0; 
+    
     color: white;
     overflow-x: hidden;
 }
@@ -41,54 +47,31 @@ body {
     align-items: center;
 }
 
-h1 {
-    font-family: Georgia, serif;
-    font-size: clamp(60px, 8vw, 110px);
-    line-height: 0.85;
-    font-weight: bold;
-    text-align: center;
-    padding: 20px 0 6px;
-
-    /* Letras con degradado de oro envejecido */
-    background: linear-gradient(
-        180deg,
-        #fff1c9 0%,
-        #f1cf86 45%,
-        #c9954a 100%
-    );
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent;
-
-    /* Halo cálido y suave, no neón */
-    filter:
-        drop-shadow(0 0 6px rgba(240, 190, 100, 0.35))
-        drop-shadow(0 0 22px rgba(200, 140, 50, 0.25));
+.titulo{
+   font-family: 'titulo';
+    font-size: 80px; 
+    color: #FECE79; 
+    text-shadow: 4px 4px 0px #8C0902; 
+    margin: 0 0 10px 0; 
+    text-align: center; 
 }
 
 h1 span {
     display: block;
     margin-top: 14px;
-    font-size: 0.58em;
-    font-style: italic;
+    font-size: 50px;
+    color: #FECE79;
+    text-shadow: 4px 4px 0px #8C0902;
+     margin: 0 0 10px 0; 
+    text-align: center; 
 
-    background: linear-gradient(
-        180deg,
-        #f6c56a 0%,
-        #d9993a 60%,
-        #a8692a 100%
-    );
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent;
+    
 }
 
 
 .subtitulo {
     margin-top: 24px;
-    font-family: Georgia, serif;
+    font-family: 'texto';
     font-size: 19px;
     color: #eee3ca;
     text-align: center;

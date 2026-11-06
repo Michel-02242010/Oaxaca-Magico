@@ -2,12 +2,15 @@
    ESTILOS GENERALES Y BASE DE LA TEMÁTICA OAXAQUEÑA
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Lilita+One&display=swap');
-
-
 @font-face {
-    font-family: 'Butter'; 
-    src: url('fuentes/Butterpop.ttf') format('truetype'); 
+    font-family: 'banana'; 
+    src: url('fuentes/Yellow Banana.otf') format('truetype'); 
+
+}
+@font-face {
+    font-family: 'butter'; 
+    src: url('fuentes/butter.otf') format('truetype'); 
+    
 }
 
 
@@ -18,19 +21,14 @@
 
 
 @font-face {
-    font-family: 'baby';
-    src: url('fuentes/Hello Baby.otf') format('truetype');
-    
-}
-@font-face {
     font-family: 'bonis'; 
-    src: url('fuentes/KGPerfectPenmanship.ttf') format('truetype'); 
+    src: url('fuentes/bonis.ttf') format('truetype'); 
     
 }
 
 
 @font-face {
-    font-family: 'bonis'; 
+    font-family: 'texto'; 
     src: url('fuentes/texto.otf') format('truetype'); 
     
 }
@@ -149,7 +147,7 @@ body {
 .titulo-concepto {
     background:#6B3E24;
     color: #c88f83;
-    font-family: "Butter", sans-serif;
+    font-family: "butter";
     font-size: 30px;
     letter-spacing: 2px;
     font-weight: bold;
@@ -212,7 +210,7 @@ body {
     color: #4a291a;
     padding: 10px 15px;
     border-radius: 12px;
-    font-family: "bonis" ;
+    font-family: "texto" ;
     font-size: 15px;
     font-weight: 500;
     display: flex;
@@ -256,7 +254,7 @@ body {
 .titulo-similitudes {
     background-color: #e8d0af;
     color: #4a291a;
-    font-family: "baby", sans-serif;
+    font-family: "butter";
     font-size: 20px;
     font-weight: bold;
     text-transform: uppercase;
@@ -281,8 +279,8 @@ body {
     align-items: center;
     gap: 10px;
     color: #ffffff;
-    font-family: "bonis";
-    font-size: 13.5px;
+    font-family: 'banana';
+    font-size: 14px;
     line-height: 1.3;
     border-right: 1px dashed rgba(223, 158, 81, 0.4);
     padding-right: 10px;
@@ -297,7 +295,7 @@ body {
 button {
   margin-top: 30px;
   padding: 1.3em 3em;
-  font-family: "Butter", sans-serif;
+  font-family:"butter";
   font-size: 14px;
   text-transform: uppercase;
   letter-spacing: 2px;

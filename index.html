@@ -25,7 +25,7 @@
     <main class="pantalla">
         
         <header class="encabezado">
-            <h1>OAXACA <span>Mágico</span></h1>
+            <h1 class="titulo">OAXACA <span>Mágico</span></h1>
             <p class="subtitulo">Mitos y Leyendas de las Ocho Regiones de Oaxaca</p>
         </header>
 
@@ -33,104 +33,22 @@
             <div id="mapa-oaxaca">
             </div>
         </section>
-        <section class="mapa" aria-label="Mapa interactivo de Oaxaca">
-            <div id="mapa-oaxaca">
-            </div>
-        </section>
 
-    <div class="btn-container-magico">
-    <a href="plataforma.php" class="btn-regresar-magico">
-        <span>Regresar💦</span>
-    </a>
-</div>
 
-        <style>
-/* Contenedor del botón para controlar los destellos de fondo */
-.btn-container-magico {
-    position: relative;
-    display: inline-block;
-    padding: 10px; /* Espacio para que el brillo no se corte */
-}
-
-.btn-regresar-magico {
-    font-family: 'Fredoka One', cursive, 'Quicksand', sans-serif;
-    font-size: 14px;
-    font-weight: bold;
-    color: #FBF5D2; /* Texto en tono crema dorado (Shining Side) */
-    text-decoration: none;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    padding: 12px 28px;
-    display: inline-block;
-    position: relative;
-    z-index: 10;
-    cursor: pointer;
-    background-color: #441004; /* Fondo café oscuro elegante (Beauty Brass) */
-    border: 1px solid #79380B; /* Borde bronce (Ancient Bronze) */
-    border-radius: 8px;
-    overflow: hidden;
-    transition: all 0.5s ease;
-}
-
-/* Los dos círculos mágicos de oro difuminados en el fondo (Glow) */
-.btn-regresar-magico::before,
-.btn-regresar-magico::after {
-    content: '';
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(12px); /* Efecto difuminado místico */
-    opacity: 0.5;
-    z-index: -1;
-    transition: all 0.5s ease;
-}
-
-/* Esfera dorada clara en la esquina superior derecha */
-.btn-regresar-magico::before {
-    width: 48px;
-    height: 48px;
-    top: -12px;
-    right: -4px;
-    background-color: #EFBB55; /* Dorado brillante (Golden Glamor) */
-}
-
-/* Esfera bronce/ocre en la esquina inferior izquierda */
-.btn-regresar-magico::after {
-    width: 80px;
-    height: 80px;
-    bottom: -12px;
-    right: -32px;
-    background-color: #AD6D15; /* Tono Cobre/Bronce */
-}
-
-/* --- EFECTOS HOVER (Al pasar el mouse) --- */
-.btn-regresar-magico:hover {
-    color: #EFBB55; /* El texto resalta en dorado brillante */
-    border-color: #EFBB55;
-    /* Resplandor exterior en color oro */
-    box-shadow: 0 0 35px rgba(239, 187, 85, 0.4); 
-}
-
-/* Al pasar el mouse, los destellos dorados crecen e iluminan el botón */
-.btn-regresar-magico:hover::before {
-    transform: scale(2) translate(-20px, 10px);
-    filter: blur(14px);
-    opacity: 0.8;
-}
-
-.btn-regresar-magico:hover::after {
-    transform: scale(1.8) translate(-10px, -10px);
-    filter: blur(14px);
-    opacity: 0.7;
-}
-
-/* Al hacer clic */
-.btn-regresar-magico:active {
-    transform: scale(0.96);
-    box-shadow: 0 0 15px rgba(239, 187, 85, 0.2);
-}
-</style>
-
+    
     </main>
+
+<style> @font-face {
+    font-family: 'titulo'; 
+    src: url('fuentes/titulo.otf') format('truetype'); 
+}
+
+@font-face {
+    font-family: 'texto';
+    src: url('fuentes/texto.otf') format('truetype');
+}
+
+</style>
 
 </body>
 </html>

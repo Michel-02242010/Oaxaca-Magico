@@ -3,14 +3,24 @@
     src: url('fuentes/Hello Baby.otf') format('truetype'); /* 👈 Ruta exacta y nombre del archivo */
 }
 @font-face {
-    font-family: 'titulo'; /* 👈 Pon el nombre corto que tú quieras para identificarla */
-    src: url('fuentes/titulo.otf') format('truetype'); /* 👈 Ruta exacta y nombre del archivo */
+    font-family: 'titulo';
+    src: url('fuentes/titulo.otf') format('truetype');
 }
 @font-face {
     font-family: 'bonis'; /* 👈 Pon el nombre corto que tú quieras para identificarla */
-    src: url('fuentes/KGPerfectPenmanship.ttf') format('truetype'); /* 👈 Ruta exacta y nombre del archivo */
+    src: url('fuentes/bonis.ttf') format('truetype'); /* 👈 Ruta exacta y nombre del archivo */
 }
-KGPerfectPenmanship.ttf
+@font-face {
+    font-family: 'texto'; 
+    src: url('fuentes/texto.otf') format('truetype'); 
+    
+}
+
+@font-face {
+    font-family: 'butter'; 
+    src: url('fuentes/butter.otf') format('truetype'); 
+    
+}
 
 
 *{
@@ -154,47 +164,7 @@ KGPerfectPenmanship.ttf
 
 }
 
-/*-----------------------Encabezado-------------------*/
-   .navbar {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            background: rgba(26, 15, 8, 0.95);
-            padding: 12px;
-            border-radius: 25px;
-            border: 4px solid #E6A341;
-            max-width: 600px;
-            margin: 0 auto 30px auto;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-            position: relative;
-            z-index: 10;
-        }
-         .tab-btn {
-            font-family: 'Fredoka One', cursive;
-            background: transparent;
-            border: none;
-            color: #FFFBF2;
-            padding: 10px 22px;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 18px;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-   .tab-btn:hover {
-            background: rgba(230, 163, 65, 0.15);
-            color: #FECE79;
-        }
 
-        /* Tu botón con el relieve tridimensional activo */
-        .tab-btn.activa {
-            background: #8C0902;
-            color: #FFFBF2;
-            border-bottom: 4px solid #4A0502;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        }
 /*----------------pergamino-----------------------*/
         body {
   background:#210;
@@ -226,14 +196,15 @@ KGPerfectPenmanship.ttf
     size: 5em;
     text-align: center;
     color: #401f0f;
-    padding-top: 15px;
+    padding-top: 40px;
 }
 
 .texto{
-    font-family: 'bonis';
-    size: 10px;
+    font-family: 'texto';
+    size: 20px;
     text-align: center;
     color: #4A0502;
+    margin-top: 30px;
 
 }
 
@@ -262,6 +233,15 @@ KGPerfectPenmanship.ttf
     transform: scale(0.98);
 }
     
+.pointer-particles {position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100vh; 
+    z-index: 99999 !important; 
+    pointer-events: none; }
+     
+
 
 
 
