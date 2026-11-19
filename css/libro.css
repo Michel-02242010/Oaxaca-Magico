@@ -19,6 +19,20 @@ body{
     background-color: #351904;
 }
 
+
+#video-humo-fondo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -1; 
+    opacity: 0.4; 
+    mix-blend-mode: screen; 
+    pointer-events: none;}
+
+
 /* 🟫 EL LIENZO PRINCIPAL DEL JUEGO */
 .escena-codice-rpg {
     position: fixed;
@@ -30,9 +44,21 @@ body{
     justify-content: center;
     align-items: center;
     z-index: 5;
-    background-color: #351904; /* El café muy oscuro místico que elegiste */
+    background-color: transparent;/* El café muy oscuro místico que elegiste */
     overflow: hidden;
 }
+
+#btn-esquina {
+    position: absolute;
+    top: 30px;    
+    right: 100px;    
+    z-index: 1000; 
+    width: 180px;
+    height: 65px;
+    size: 2em;  
+    border: 2px solid  #c08552; ;
+}
+
 
 /* 📖 EL CONTENEDOR DEL LIBRO (Plano y visible por ahora) */
 .libro-contenedor {
@@ -46,7 +72,7 @@ body{
     justify-content: space-between;
     padding: 120px 105px;
     box-sizing: border-box;
-    border: 3px solid red; /* 👈 BORDE ROJO TEMPORAL de calibración */
+   /* border: 3px solid red;*/ /* 👈 BORDE ROJO TEMPORAL de calibración */
 }
 
 /* 📑 CONFIGURACIÓN DE LAS DOS HOJAS */
@@ -207,6 +233,9 @@ body{
     margin: 10px 0;
 }
 
+/*
+
+*/
 .contenedor-ilustracion img {
     width: 100%;
     height: 100%;
@@ -218,23 +247,21 @@ body{
     height: 140px; 
 }
 
-/* 🔦 CAPA DE OSCURIDAD TOTAL DE LA ANTORCHA */
 #capa-antorcha {
-
+   /*  display: none;*/
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100vh;
-    /* Nace centrada por defecto usando el café oscuro que elegiste */
-    background: radial-gradient(circle 150px at 50% 50%, transparent 0%, rgba(26, 15, 8, 0.96) 100%);
-    z-index: 10; /* Un número alto para que cubra el libro y solo deje ver a través del círculo */
-    pointer-events: none; /* 🚀 TRUCO CLAVE: Hace que el mouse "atraviese" la oscuridad para poder picar los botones */
+    background: radial-gradient(circle 400px at 50% 50%, transparent 0%, rgba(253, 238, 184, 0.15) 0%, rgba(26, 15, 8, 0.97) 100%);
+    z-index: 10; 
+    pointer-events: none; 
 }
 
 
 /* ==========================================================================
-   🚀 PASO 5: SISTEMA DE ZOOM Y ESTADOS DEL CODICE (CALIBRADO)
+    PASO 5: SISTEMA DE ZOOM Y ESTADOS DEL CODICE (CALIBRADO)
    ========================================================================== */
 
 .contenido-texto {
@@ -245,7 +272,7 @@ body{
     color: #291104;     
     line-height: 1.4;
     
-    /* 🚀 TRUCO CLAVE: Nace completamente oculto y encogido en la vista general */
+    /*  TRUCO CLAVE: Nace completamente oculto y encogido en la vista general */
     display: none !important; 
     opacity: 0;
     margin-top: 10px;
@@ -272,10 +299,15 @@ body{
     object-fit: contain;
 }
 
+#texto1, #texto2, #texto3, #texto4, #texto5, #texto6 {
+    color: #ffffff !important; /* Fuerza a que las letras sean blancas */
+    font-size: 16px;           /* Asegura un tamaño visible */
+}
+
 
 
 /* ==========================================================================
-   🔄 EFECTOS DE MOVIMIENTO DEL LIBRO (TRANSFORMACIONES EN 3D)
+   EFECTOS DE MOVIMIENTO DEL LIBRO (TRANSFORMACIONES EN 3D)
    ========================================================================== */
 
 /* Le agregamos una transición suave al libro para que el zoom no sea brusco */

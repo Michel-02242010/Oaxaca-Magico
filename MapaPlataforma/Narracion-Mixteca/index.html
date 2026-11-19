@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Oaxaca Mágico - Leyenda</title>
+  <link rel="stylesheet" href="css/pergamino.css">
+</head>
+<body>
+  <section id="visor" class="oculto">
+    <video id="video-fondo"  loop playsinline preload="auto"></video>
+    <button id="btn-volver">Volver al mapa</button>
+    <button id="btn-ver-mito">Ver mito</button>
+
+    <div id="pergamino">
+      <div class="cerrado"></div>
+      <img class="papel" src="img/pergamino.png" alt="">
+      <div id="zona-texto">
+        <h2 id="titulo-mito"></h2>
+        <p id="texto-mito"></p>
+      </div>
+    </div>
+  </section>
+
+  <script src="js/mito.js"></script>
+  <script src="js/visor.js"></script>
+</body>
+</html>

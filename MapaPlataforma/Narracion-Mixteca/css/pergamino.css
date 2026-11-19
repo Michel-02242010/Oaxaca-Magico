@@ -1,0 +1,193 @@
+@font-face {
+  font-family: "FuenteTitulo";
+  src: url("../fonts/titulo.otf") format("opentype");
+}
+@font-face {
+  font-family: "FuenteTexto";
+  src: url("../fonts/texto.otf") format("opentype");
+}
+
+/* ---------- RESET Y CONFIGURACIÓN GENERAL ---------- */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  background: #1b130b;
+  color: #f1e2c0;
+  font-family: Georgia, serif;
+  display: grid;
+  place-items: center;
+}
+
+button {
+  font-family: Georgia, serif;
+  padding: 0.7rem 1.6rem;
+  background: #8a5e22;
+  color: #fff3d6;
+  border: 1px solid #e0b45c;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* ---------- VISOR A PANTALLA COMPLETA ---------- */
+#visor {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(63, 45, 8, 0.945);
+  overflow: hidden;
+}
+
+.oculto { display: none !important; }
+
+/* ---------- EL VIDEO DE FONDO ---------- */
+#video-fondo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1; /* Detrás de los botones y el pergamino */
+}
+
+/* ---------- BOTONES DE CONTROL CORREGIDOS ---------- */
+#btn-volver, #btn-ver-mito { 
+  position: absolute; 
+  z-index: 20; /* Por encima de todo */
+  width: max-content; /* Obliga a medir solo su texto */
+  height: auto;
+}
+#btn-volver { 
+  top: 1rem; 
+  left: 1rem; 
+}
+#btn-ver-mito { 
+  top: 4.5rem; /* Se mantiene abajo del botón volver */
+  left: 1rem;  /* Alineado a la izquierda para mantener tu estructura limpia */
+}
+
+/* ---------- PERGAMINO AGRANDADO ---------- */
+#pergamino {
+  position: relative;
+  z-index: 5;
+  /* Subimos del 92vw original a un 96vw y recalculamos la escala de pantalla */
+  width: min(96vw, 1200px, calc((100vh - 60px) * 1.777));
+  aspect-ratio: 1672 / 941;
+}
+
+.cerrado {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  height: 100%;
+  aspect-ratio: 192 / 941;
+  transform: translateX(-50%);
+  background: url("../img/pergamino.png") 1.2% 0 / 871% 100% no-repeat;
+  transition: opacity 0.6s;
+  z-index: 6;
+}
+
+.papel {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  clip-path: inset(0 49% 0 49%);
+  transition: clip-path 1.4s ease-in-out, opacity 0.5s;
+  z-index: 5;
+}
+
+#pergamino.abierto .cerrado { opacity: 0; pointer-events: none; }
+#pergamino.abierto .papel {
+  opacity: 1;
+  clip-path: inset(0 0 0 0);
+}
+
+/* ---------- TEXTO SOBRE EL PERGAMINO ---------- */
+#zona-texto {
+  position: absolute;
+  top: 22%;
+  left: 14%;
+  width: 72%;
+  height: 62%;
+  display: flex;
+  flex-direction: column;
+  color: #3a2410;
+  opacity: 0;
+  transition: opacity 0.8s 1s;
+  z-index: 7;
+}
+#pergamino.abierto #zona-texto { opacity: 1; }
+
+#titulo-mito {
+  flex-shrink: 0;
+  margin: 0 0 0.9rem;
+  text-align: center;
+  font-family: "FuenteTitulo", serif;
+  font-weight: 400;
+  font-size: clamp(1.4rem, 3.6vw, 2.6rem);
+  line-height: 1.2;
+  letter-spacing: 0.04em;
+  color: #5a1e0c;
+  text-shadow: 0 0 10px rgba(255, 215, 120, 0.7), 0 1px 0 rgba(255, 240, 200, 0.6);
+}
+#titulo-mito::after {
+  content: "✦";
+  display: block;
+  margin-top: 0.4rem;
+  font-size: 0.55em;
+  color: #8a5e22;
+}
+
+#texto-mito {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  margin: 0;
+  padding: 0.6rem 0.4rem;
+  text-align: center;
+  font-family: "FuenteTexto", serif;
+  font-weight: 500;
+  font-size: clamp(1.1rem, 2.5vw, 1.7rem);
+  line-height: 1.65;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  -webkit-mask-image: linear-gradient(transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(transparent, #000 6%, #000 94%, transparent);
+}
+#texto-mito::-webkit-scrollbar { display: none; }
+
+.w { opacity: 0; transition: opacity 0.4s; }
+.w.on { opacity: 1; }
+/* Posicionar ambos botones abajo a la derecha */
+#btn-volver,
+#btn-ver-mito {
+  position: fixed;
+  top: auto;       
+  left: auto;      
+  bottom: 25px;    
+  z-index: 20;     
+}
+
+/* El botón "Ver mito" va pegado a la esquina derecha */
+#btn-ver-mito {
+  right: 25px;
+}
+
+/* El botón "Volver al mapa" va a la izquierda del botón "Ver mito" */
+#btn-volver {
+  right: 155px; /* Ajusta este valor según el ancho de tu botón "Ver mito" */
+}
+

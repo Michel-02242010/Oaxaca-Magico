@@ -27,9 +27,23 @@
 
 </style>
 
-    <!-- 🔦 CAPA DE OSCURIDAD DE LA ANTORCHA -->
+  
     <div id="capa-antorcha"></div>
-<!-- 🎵 AUDIO NATIVO PRECARGADO -->
+    <body>
+    
+  <button class="boton-uiverse-rpg" id="btn-esquina" onclick="window.location.href='MapaPlataforma/OaxacaMagico/index.html'">
+    <span>Ir a mapa</span>
+</button>
+
+
+
+    <span>Ir a mapa</span>
+</button>
+
+    <video autoplay loop muted playsinline id="video-humo-fondo">
+        <source src="img_libro/humo.mp4" type="video/mp4">
+    </video>
+
 <audio id="efecto-hoja" src="sonido/sonido_1.mp3" preload="auto"></audio>
 
     <!-- 📜 ESTRUCTURA DEL CÓDICE -->
@@ -42,10 +56,11 @@
                 <div class="separador"></div>
                 
                 <div class="contenido-texto">
-                    <p>🔹 <strong>Origen Sagrado:</strong> Narra acontecimientos sagrados y hazañas de seres sobrenaturales en el principio de los tiempos.</p>
-                    <p>🔹 <strong>Fuera del Tiempo:</strong> Ocurre en una época cósmica anterior al tiempo real de los humanos.</p>
-                    <p>🔹 <strong>Explicación Universal:</strong> Busca explicar el origen del mundo o de la creación.</p>
-                </div>
+                 <p id="mito-p1"></p>
+                 <p id="mito-p2"></p>
+                 <p id="mito-p3"></p>
+               </div>
+                
                 
                 <!-- ID único para la caja de la imagen -->
                 <div class="contenedor-ilustracion" id="ilustracion-original-mito">
@@ -61,14 +76,13 @@
             <div class="pagina-libro" id="hoja-leyenda">
                 <h2 class="titulo-pagina">La Leyenda</h2>
                 <div class="separador"></div>
-                
+
                 <div class="contenido-texto" id="texto-leyenda">
-                    <p>🔸 <strong>Base Real:</strong> Está basada en un hecho histórico, un personaje verdadero o un lugar real.</p>
-                    <p>🔸 <strong>Tiempo Humano:</strong> Se sitúa en una época histórica concreta y cercana a la comunidad.</p>
-                    <p>🔸 <strong>Elemento Fantástico:</strong> Se le agregan detalles mágicos o de misterio propios del folklore.</p>
+                 <p id="leyenda-p1"></p>
+                 <p id="leyenda-p2"></p>
+                 <p id="leyenda-p3"></p>
                 </div>
-                
-                <!-- ID único para la caja de la imagen -->
+
                 <div class="contenedor-ilustracion" id="ilustracion-original-leyenda">
                     <img src="img_libro/2llorona.png" alt="Leyenda">
                 </div>
@@ -78,23 +92,14 @@
                 </button>
             </div>
 
-        </div> <!-- /libro-contenedor -->
-    </div> <!-- /escena-codice-rpg -->
+        </div>
+    </div> 
+    <audio id="audio-mito" src="sonido/1_mito.mp3" preload="auto"></audio>
+    <audio id="audio-leyenda" src="sonido/1_leyenda.mp3" preload="auto"></audio>
 
+     
     <script src="js/mito_leyenda.js"></script>
+    
 
 </body>
 </html>
-
-
-
-
-<
-
-
-
-
-
-
-
-
