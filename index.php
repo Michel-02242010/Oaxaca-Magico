@@ -1,17 +1,23 @@
 <?php
-session_start(); if(file_exists("conexion.php"))include("conexion.php"); $error = "";
+session_start();
+if (file_exists("conexion.php")) include("conexion.php");
+$error = "";
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $u = trim($_POST['usuario']); $g = trim($_POST['Grupo']); $p = $_POST['contrasena'];
+    $u = trim($_POST['usuario']);
+    $g = isset($_POST['Grupo']) ? trim($_POST['Grupo']) : '';
+    $p = $_POST['contrasena'];
+
     if (isset($conexion) && !empty($u) && !empty($p)) {
         $u_sql = mysqli_real_escape_string($conexion, $u);
         $res = mysqli_query($conexion, "SELECT * FROM usuarios WHERE usuario = '$u_sql'");
+
         if (mysqli_num_rows($res) == 1) {
             $f = mysqli_fetch_assoc($res);
             if ($p == $f['contrasena']) {
-                $_SESSION['alumno_id'] = $f['id']; $_SESSION['alumno_nombre'] = $f['nombre_alumno'];
-                header("Location: inter.php"); exit();
-            } else $error = "¡Contraseña incorrecta!";
-                              if (isset($_POST['ir_al_mapa'])) {
+                $_SESSION['alumno_id'] = $f['id'];
+                $_SESSION['alumno_nombre'] = $f['nombre_alumno'];
+                if (isset($_POST['ir_al_mapa']) && $_POST['ir_al_mapa'] == 'si') {
                     header("Location: index.html");
                 } else {
                     header("Location: inter.php");
@@ -20,17 +26,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             } else {
                 $error = "¡Contraseña incorrecta!";
             }
-
         } else {
-            // ¡EL TRUCO MÁGICO!: Si no existe, lo guarda automáticamente en la base de datos
-            $ins = mysqli_query($conexion, "INSERT INTO usuarios (nombre_alumno, usuario, contrasena, puntos_totales) VALUES ('$u', '$u', '$p', 0)");
+            $ins = mysqli_query($conexion, "INSERT INTO usuarios (nombre_alumno, usuario, contrasena, puntos_totales) VALUES ('$u_sql', '$u_sql', '$p', 0)");
             if ($ins) {
-                $_SESSION['alumno_id'] = mysqli_insert_id($conexion); $_SESSION['alumno_nombre'] = $u;
-                header("Location: inter.php"); exit();
-            } else $error = "¡Error al registrar el alumno!";
+                $_SESSION['alumno_id'] = mysqli_insert_id($conexion);
+                $_SESSION['alumno_nombre'] = $u;
+                header("Location: inter.php");
+                exit();
+            } else {
+                $error = "¡Error al registrar el alumno!";
+            }
         }
-    } else { $_SESSION['alumno_nombre'] = $_POST['usuario']; header("Location: inter.php"); exit(); }
-
+    } else {
+        $_SESSION['alumno_nombre'] = $_POST['usuario'];
+        header("Location: inter.php");
+        exit();
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
