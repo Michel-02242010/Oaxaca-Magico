@@ -7,31 +7,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $res = mysqli_query($conexion, "SELECT * FROM usuarios WHERE usuario = '$u_sql'");
         if (mysqli_num_rows($res) == 1) {
             $f = mysqli_fetch_assoc($res);
-               if ($p == $f['contrasena']) {
-            $_SESSION['alumno_id'] = $f['id'];
-            $_SESSION['alumno_nombre'] = $f['nombre_alumno'];
-
-            if (isset($_POST['ir_al_mapa'])) {
-                header("Location: MapaPlataforma/OaxacaMagico/index.html");
+            if ($p == $f['contrasena']) {
+                $_SESSION['alumno_id'] = $f['id']; $_SESSION['alumno_nombre'] = $f['nombre_alumno'];
+                header("Location: inter.php"); exit();
+            } else $error = "¡Contraseña incorrecta!";
+                              if (isset($_POST['ir_al_mapa'])) {
+                    header("Location: index.html");
+                } else {
+                    header("Location: inter.php");
+                }
+                exit();
             } else {
-                header("Location: inter.php");
+                $error = "¡Contraseña incorrecta!";
             }
-            exit();
-        } else {
-            $error = "¡Contraseña incorrecta!";
-        }
-
 
         } else {
             // ¡EL TRUCO MÁGICO!: Si no existe, lo guarda automáticamente en la base de datos
-            $ins = mysqli_query($conexion, "INSERT INTO usuarios (nombre_alumno, usuario, contrasena, puntos_totales) VALUES ('$u_sql', '$u_sql', '$p', 0)");
+            $ins = mysqli_query($conexion, "INSERT INTO usuarios (nombre_alumno, usuario, contrasena, puntos_totales) VALUES ('$u', '$u', '$p', 0)");
             if ($ins) {
                 $_SESSION['alumno_id'] = mysqli_insert_id($conexion); $_SESSION['alumno_nombre'] = $u;
                 header("Location: inter.php"); exit();
             } else $error = "¡Error al registrar el alumno!";
         }
     } else { $_SESSION['alumno_nombre'] = $_POST['usuario']; header("Location: inter.php"); exit(); }
-}
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -92,7 +91,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         .lbl-datos { font-family:'texto'; display: block; text-align: left; font-size: 18px; color: #FECE79; margin: 0 0 6px 4px; font-weight: 700; text-transform: uppercase; letter-spacing:2px; }
         input { font-family: 'texto'; width: 100%; padding: 14px 18px; box-sizing: border-box; border-radius: 14px; border: 2px solid #5C3A21; font-size: 16px; font-weight: 700; color: #fff; background: #2B160A; outline: none; margin-bottom: 16px; }
         input:focus { border-color: #FECE79; background: #1A0F08; }
- .btn-jugar { font-family: 'butter', sans-serif; 
+
+
+        .btn-jugar { font-family: 'butter', sans-serif; 
        display: inline-block;
        width: 700;
         background: linear-gradient(135deg, #E6A341, #8C0902); 
@@ -105,106 +106,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         cursor: pointer; 
         width: 100%; 
         margin-top: 10px; 
-        letter-spacing: 2px; }       
+        letter-spacing: 2px; }
+        
+        
+        
+        
         p{font-family:"texto"; font-size:18px; text-align: center; color:white;}
         .pointer-particles {position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: 1; pointer-events: none; }
-
+     
         .btn-jugar { font-family: 'Quicksand', sans-serif; background: linear-gradient(135deg, #E6A341, #8C0902); color: #fff; border: none; padding: 16px; font-size: 19px; font-weight: 700; border-radius: 16px; cursor: pointer; width: 100%; margin-top: 10px; }
         .contenedor-casilla { display: flex; align-items: center; gap: 10px; margin: 5px 0 15px 4px; color: #FFFBF2; font-size: 14px; font-weight: bold; text-align: left; cursor: pointer; }
         .contenedor-casilla input { width: auto; margin: 0; accent-color: #E6A341; cursor: pointer; }
 
-        /* Diseño base y posición fija en la esquina superior derecha */
-#btn-profa-login.boton-uiverse-rpg {
-    position: fixed;
-    top: 25px;
-    right: 25px;
-    z-index: 99999;
-    
-    /* Tamaño ajustado para que quepa el texto largo sin deformarse */
-    width: auto;
-    height: auto;
-    padding: 12px 22px;
-    margin-bottom: 0;
-    
-    /* Colores café madera de tu diseño RPG */
-    border-radius: 6px;
-    border: 2px solid #3b1907;
-    background-color: #3b1907;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-    overflow: hidden;
-    transition: all 0.5s ease-in;
-    cursor: pointer;
-}
-
-/* Cortinas internas animadas (Rojo Vino y Café Místico) */
-#btn-profa-login.boton-uiverse-rpg::before,
-#btn-profa-login.boton-uiverse-rpg::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    width: 0;
-    height: 100%;
-    transform: skew(15deg);
-    transition: all 0.5s;
-    overflow: hidden;
-    z-index: -1;
-}
-
-#btn-profa-login.boton-uiverse-rpg::before {
-    left: -10px;
-    background: #895737;
-}
-
-#btn-profa-login.boton-uiverse-rpg::after {
-    right: -10px;
-    background: #c08552;
-}
-
-/* Efecto al pasar el mouse (Hover) */
-#btn-profa-login.boton-uiverse-rpg:hover::before,
-#btn-profa-login.boton-uiverse-rpg:hover::after {
-    width: 58%;
-}
-
-/* Estilo del texto color crema pergamino */
-#btn-profa-login.boton-uiverse-rpg span {
-    color: #FBECC3;
-    font-family: 'butter', sans-serif;
-    font-size: 14px;
-    font-weight: bold;
-    transition: all 0.3s ease-in;
-    letter-spacing: 1px;
-    position: relative;
-    z-index: 2;
-}
-
-        
     </style>
 </head>
 <body>
-     <pointer-particles style="position: absolute; 
- top: 0;
-  left: 0;
-  width: 100%; 
-  height: 100%; 
- min-height: 100vh;
-  z-index: 1; 
-  pointer-events: none; 
-  display: block;"></pointer-particles>
-  
-      <script src="js/particulas_index.js"></script>
     <!-- Botón solicitado por la profa, se activa solo en esta pantalla -->
-     <button type="button" onclick="irALoginDirecto()" id="btn-profa-login" class="boton-uiverse-rpg" style="display: none;">
-    <span> 🏰 YA TENGO UNA CUENTA 🗺️</span>
-</button>
-
+    <button type="button" onclick="irAlLoginDirecto()" id="btn-profa-login" style="position: fixed; top: 25px; right: 25px; z-index: 99999; font-family: 'Quicksand', sans-serif; background: linear-gradient(135deg, #E6A341, #8C0902); color: white; border: 3px solid #FECE79; padding: 12px 24px; font-size: 16px; font-weight: bold; border-radius: 50px; cursor: pointer; box-shadow: 0 8px 20px rgba(0,0,0,0.5); display: none;">
+        🏰 YA TENGO UNA CUENTA 🗺️
+    </button>
     <audio id="musica" src="rojo.mp3" loop></audio>
 
+   
+      <pointer-particles style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; min-height: 100vh; z-index: 1; pointer-events: none; display: block;"></pointer-particles>
+
+      <script src="js/particulas_index.js"></script>
+        
+    <div class="estrella" style="top: 15%; left: 12%;"></div>
+    <div class="estrella" style="top: 25%; left: 78%;"></div>
+    <div class="estrella" style="top: 70%; left: 18%;"></div>
+    <div class="burbuja" style="left: 15%; width: 55px; height: 55px; animation-duration: 7s;"></div>
+    <div class="burbuja" style="left: 65%; width: 50px; height: 50px; animation-duration: 9s;"></div>
+    <div class="chispa" style="left: 40%; width: 6px; height: 6px; animation-duration: 6s;"></div>
 
     <div id="introScreen" class="intro-screen" <?php echo !empty($error) ? 'style="transform: translateY(-100%);"' : ''; ?>>
         <h1 class="title-main">OAXACA MÁGICO</h1>
         <h2 class="subtitle-sub">Mitos y Leyendas de Oaxaca</h2>
      <button type="button" id="btnEmpezar" class="btn-empezar">¡EMPEZAR AVENTURA!</button>
+    
+
+
     </div>
 
     <div id="loginBox" class="login-box <?php echo !empty($error) ? 'mostrar' : ''; ?>">
@@ -230,61 +171,58 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </div>
             <button class="btn-jugar" type="submit">INGRESAR</button>
         </form>
-          <script>
-        // 1. Función para cambiar al login de usuarios con cuenta
-        function irALoginDirecto() {
-            const contenedorGrupo = document.getElementById('contenedor-grupo');
-            const txtGrupo = document.getElementById('txt-grupo');
-            const btnEnviar = document.querySelector('.btn-jugar');
-            const tituloCaja = document.querySelector('#loginBox h1');
+        <script>
+function irAlLoginDirecto() {
+    const contenedorGrupo = document.getElementById('contenedor-grupo');
+    const txtGrupo = document.getElementById('txt-grupo');
+    const btnEnviar = document.querySelector('.btn-jugar');
+    const tituloCaja = document.querySelector('#loginBox h1');
 
-            // Creamos la marca oculta para avisarle a PHP que vaya directo al mapa
-            let checkMapa = document.querySelector('input[name="ir_al_mapa"]');
-            if (!checkMapa) {
-                checkMapa = document.createElement('input');
-                checkMapa.type = 'hidden';
-                checkMapa.name = 'ir_al_mapa';
-                document.querySelector('form').appendChild(checkMapa);
-            }
+    // Creamos la marca oculta para avisarle a PHP que vaya al mapa
+    let checkMapa = document.querySelector('input[name="ir_al_mapa"]');
+    if (!checkMapa) {
+        checkMapa = document.createElement('input');
+        checkMapa.type = 'hidden';
+        checkMapa.name = 'ir_al_mapa';
+        document.querySelector('form').appendChild(checkMapa);
+    }
 
-            // Modificamos la interfaz para el alumno con cuenta
-            if (contenedorGrupo) contenedorGrupo.style.display = 'none';
-            if (txtGrupo) txtGrupo.removeAttribute('required');
-            if (tituloCaja) tituloCaja.innerHTML = "¡Inicia <span>Sesión</span>!";
-            if (btnEnviar) btnEnviar.innerText = "INGRESAR AL MAPA ➔";
-            
-            checkMapa.value = 'si';
+    // Modificamos la interfaz para el niño con cuenta
+    if (contenedorGrupo) contenedorGrupo.style.display = 'none';
+    if (txtGrupo) txtGrupo.removeAttribute('required');
+    if (tituloCaja) tituloCaja.innerHTML = "¡Inicia <span>Sesión</span>!";
+    if (btnEnviar) btnEnviar.innerText = "INGRESAR AL MAPA ➔";
+    
+    checkMapa.value = 'si'; // Activa la redirección directa a plataforma.php
 
-            // Saltamos la pantalla inicial si sigue visible y mostramos el login
-            const introScreen = document.getElementById('introScreen');
-            const loginBox = document.getElementById('loginBox');
-            if (introScreen) introScreen.style.transform = 'translateY(-100%)';
-            if (loginBox) loginBox.classList.add('mostrar');
+    // Si la pantalla negra inicial estaba activa, la saltamos automáticamente
+    const introScreen = document.getElementById('introScreen');
+    const loginBox = document.getElementById('loginBox');
+    if (introScreen) introScreen.style.transform = 'translateY(-100%)';
+    if (loginBox) loginBox.classList.add('mostrar');
+}
+
+function togglePassword() {
+    const inputPass = document.getElementById('txt-contrasena');
+    const svgOjo = document.getElementById('svg-ojo');
+    
+    if (inputPass.type === 'password') {
+        inputPass.type = 'text';
+        // Código visual para el ojo abierto/activado (puedes cambiarle el color a tu dorado #FECE79 si quieres que resalte al mostrar)
+        svgOjo.setAttribute('stroke', '#FECE79');
+        svgOjo.innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>';
+    } else {
+        inputPass.type = 'password';
+        // Vuelve a estar oculto y en color blanco
+        svgOjo.setAttribute('stroke', '#FFFFFF');
+        svgOjo.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>';
+    }
         }
-
-        // 2. Conexión directa al botón para asegurar que nunca falle el clic
-        const btnProfa = document.getElementById('btn-profa-login');
-        if (btnProfa) {
-            btnProfa.addEventListener('click', irALoginDirecto);
-        }
-
-        // 3. Función del ojito de la contraseña
-        function togglePassword() {
-            const inputPass = document.getElementById('txt-contrasena');
-            const svgOjo = document.getElementById('svg-ojo');
-            
-            if (inputPass.type === 'password') {
-                inputPass.type = 'text';
-                svgOjo.setAttribute('stroke', '#FECE79');
-                svgOjo.innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>';
-            } else {
-                inputPass.type = 'password';
-                svgOjo.setAttribute('stroke', '#FFFFFF');
-                svgOjo.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>';
-            }
-        }
-
-        // 4. Memorizar usuario
+        </script>
+    </div>
+    <script>
+        
+        // Esta función memoriza el nombre del niño si decide iniciar sesión manualmente
         function guardarUsuarioMistico() {
             const inputUsuario = document.querySelector('input[name="usuario"]');
             if (inputUsuario && inputUsuario.value.trim() !== "") {
@@ -292,21 +230,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
 
-        // 5. Control de error PHP y botón "¡EMPEZAR AVENTURA!"
-        <?php if (!empty($error)): ?> 
-            document.getElementById('introScreen').style.transform = 'translateY(-100%)'; 
-            document.getElementById('loginBox').classList.add('mostrar'); 
-            document.getElementById('btn-profa-login').style.display = 'block';
-        <?php endif; ?>
-
-        document.getElementById('btnEmpezar').addEventListener('click', function() {
+        <?php if (!empty($error)): ?> document.getElementById('introScreen').style.transform = 'translateY(-100%)'; document.getElementById('loginBox').classList.add('mostrar'); <?php endif; ?>
+               document.getElementById('btnEmpezar').addEventListener('click', function() {
             document.getElementById('musica').play().catch(() => {});
             document.getElementById('introScreen').style.transform = 'translateY(-100%)';
             setTimeout(() => { 
                 document.getElementById('loginBox').classList.add('mostrar'); 
+                // 🌟 Despierta el botón morado solo aquí en la pantalla café
                 document.getElementById('btn-profa-login').style.display = 'block';
             }, 400);
         });
+
     </script>
+    
 </body>
 </html>
