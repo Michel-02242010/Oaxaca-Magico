@@ -9,10 +9,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $f = mysqli_fetch_assoc($res);
             if ($p == $f['contrasena']) {
                 $_SESSION['alumno_id'] = $f['id']; $_SESSION['alumno_nombre'] = $f['nombre_alumno'];
-<<<<<<< HEAD
                 header("Location: inter.php"); exit();
             } else $error = "¡Contraseña incorrecta!";
-=======
                               if (isset($_POST['ir_al_mapa'])) {
                     header("Location: index.html");
                 } else {
@@ -23,17 +21,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $error = "¡Contraseña incorrecta!";
             }
 
->>>>>>> aa02e2aeef8880520be2ab6f9337fce563e1a80f
         } else {
             // ¡EL TRUCO MÁGICO!: Si no existe, lo guarda automáticamente en la base de datos
-            $ins = mysqli_query($conexion, "INSERT INTO usuarios (nombre_alumno, usuario, contrasena, puntos_totales) VALUES ('$u_sql', '$u_sql', '$p', 0)");
+            $ins = mysqli_query($conexion, "INSERT INTO usuarios (nombre_alumno, usuario, contrasena, puntos_totales) VALUES ('$u', '$u', '$p', 0)");
             if ($ins) {
                 $_SESSION['alumno_id'] = mysqli_insert_id($conexion); $_SESSION['alumno_nombre'] = $u;
                 header("Location: inter.php"); exit();
             } else $error = "¡Error al registrar el alumno!";
         }
     } else { $_SESSION['alumno_nombre'] = $_POST['usuario']; header("Location: inter.php"); exit(); }
-}
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -94,7 +91,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         .lbl-datos { font-family:'texto'; display: block; text-align: left; font-size: 18px; color: #FECE79; margin: 0 0 6px 4px; font-weight: 700; text-transform: uppercase; letter-spacing:2px; }
         input { font-family: 'texto'; width: 100%; padding: 14px 18px; box-sizing: border-box; border-radius: 14px; border: 2px solid #5C3A21; font-size: 16px; font-weight: 700; color: #fff; background: #2B160A; outline: none; margin-bottom: 16px; }
         input:focus { border-color: #FECE79; background: #1A0F08; }
-<<<<<<< HEAD
 
 
         .btn-jugar { font-family: 'butter', sans-serif; 
@@ -118,11 +114,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         p{font-family:"texto"; font-size:18px; text-align: center; color:white;}
         .pointer-particles {position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: 1; pointer-events: none; }
      
-=======
         .btn-jugar { font-family: 'Quicksand', sans-serif; background: linear-gradient(135deg, #E6A341, #8C0902); color: #fff; border: none; padding: 16px; font-size: 19px; font-weight: 700; border-radius: 16px; cursor: pointer; width: 100%; margin-top: 10px; }
         .contenedor-casilla { display: flex; align-items: center; gap: 10px; margin: 5px 0 15px 4px; color: #FFFBF2; font-size: 14px; font-weight: bold; text-align: left; cursor: pointer; }
         .contenedor-casilla input { width: auto; margin: 0; accent-color: #E6A341; cursor: pointer; }
->>>>>>> aa02e2aeef8880520be2ab6f9337fce563e1a80f
 
     </style>
 </head>
@@ -132,13 +126,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         🏰 YA TENGO UNA CUENTA 🗺️
     </button>
     <audio id="musica" src="rojo.mp3" loop></audio>
-<<<<<<< HEAD
 
    
       <pointer-particles style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; min-height: 100vh; z-index: 1; pointer-events: none; display: block;"></pointer-particles>
 
       <script src="js/particulas_index.js"></script>
-=======
         
     <div class="estrella" style="top: 15%; left: 12%;"></div>
     <div class="estrella" style="top: 25%; left: 78%;"></div>
@@ -146,7 +138,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="burbuja" style="left: 15%; width: 55px; height: 55px; animation-duration: 7s;"></div>
     <div class="burbuja" style="left: 65%; width: 50px; height: 50px; animation-duration: 9s;"></div>
     <div class="chispa" style="left: 40%; width: 6px; height: 6px; animation-duration: 6s;"></div>
->>>>>>> aa02e2aeef8880520be2ab6f9337fce563e1a80f
 
     <div id="introScreen" class="intro-screen" <?php echo !empty($error) ? 'style="transform: translateY(-100%);"' : ''; ?>>
         <h1 class="title-main">OAXACA MÁGICO</h1>
